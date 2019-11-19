@@ -4,7 +4,8 @@ import {
   Memo,
   Operation,
   Transaction,
-  TransactionBuilder
+  TransactionBuilder,
+  xdr
 } from 'stellar-sdk';
 
 import ldSet from 'lodash.set';
@@ -25,7 +26,12 @@ export function toTransaction(txrep: string): Transaction {
     builder.addOperation(toOperation(operation));
   }
 
-  return builder.build();
+  const transaction = builder.build();
+
+  for (const signature of obj.signatures) {
+    transaction.signatures.push(toSignature(signature));
+  }
+  return transaction;
 }
 
 function toObj(txrep: string): object {
@@ -38,7 +44,7 @@ function toObj(txrep: string): object {
 
   fields.forEach(({ path, value }) => {
     // meta-attributes will mess up arrays if converted directly to an object, so ignore them
-    if (!isMetaAttribute(path)) {
+    if (!path || !isMetaAttribute(path)) {
       ldSet(obj, path, parseValue(value));
     }
   });
@@ -48,7 +54,8 @@ function toObj(txrep: string): object {
 
 function isMetaAttribute(path: string): boolean {
   const paths = path.split('.');
-  return paths[paths.length - 1].startsWith('_');
+  const field = paths[paths.length - 1];
+  return field === 'len' || field.startsWith('_');
 }
 
 function parseLine(line: string) {
@@ -59,6 +66,12 @@ function parseLine(line: string) {
 }
 
 function parseValue(value: string) {
+  value = stripComments(value);
+
+  if (value.startsWith('"') && value.endsWith('"')) {
+    return unescape(value.slice(1, -1));
+  }
+
   if (value === 'true') {
     return true;
   }
@@ -66,11 +79,12 @@ function parseValue(value: string) {
     return false;
   }
 
-  if (value.startsWith('"') && value.endsWith('"')) {
-    return value.slice(1, -1);
-  }
-
   return value;
+}
+
+function stripComments(value: string) {
+  // TODO: comments don't actually have to be wrapped in ()... oh bother.
+  return value.replace(/\([^()]*\)/g, '').trim();
 }
 
 function toFee(value: string): number {
@@ -185,4 +199,9 @@ function toPathPaymentStrictReceive(op: any, source: string) {
     path: path && path.map(toAsset),
     source
   });
+}
+
+function toSignature(sig) {
+  const { hint, signature } = sig;
+  return new xdr.DecoratedSignature({ hint, signature });
 }
