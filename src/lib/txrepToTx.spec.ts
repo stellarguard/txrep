@@ -1,9 +1,54 @@
 // tslint:disable:no-expression-statement
 import test from 'ava';
-import { MemoText, Operation } from 'stellar-sdk';
+import { MemoNone, MemoText, Operation } from 'stellar-sdk';
 import { toTransaction } from './txrepToTx';
 
-test('toTransaction', t => {
+test('toTransaction.createAccount', t => {
+  const txrep = `
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
+    tx.memo.type: MEMO_NONE
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: true
+    tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.operations[0].body.type: CREATE_ACCOUNT
+    tx.operations[0].body.createAccountOp.destination: GBAF6NXN3DHSF357QBZLTBNWUTABKUODJXJYYE32ZDKA2QBM2H33IK6O
+    tx.operations[0].body.createAccountOp.startingBalance: 123400000 (12.34e7)
+    tx.ext.v: 0
+    signatures.len: 0
+`;
+
+  const expectedXdr = `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAEBfNu3YzyLvv4ByuYW2pMAVUcNN04wTesjUDUAs0fe0AAAAAAda70AAAAAAAAAAAA==`;
+  const tx = toTransaction(txrep);
+
+  t.is(tx.source, 'GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF');
+  t.is(tx.fee, 100);
+  t.is(tx.sequence, '1375042369748993');
+  t.is(tx.timeBounds.minTime, '0');
+  t.is(tx.timeBounds.maxTime, '0');
+  t.is(tx.memo.type, MemoNone);
+
+  const operation = tx.operations[0] as Operation.CreateAccount;
+  t.is(operation.type, 'createAccount');
+  t.is(
+    operation.source,
+    'GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF'
+  );
+  // t.is(Number(operation.startingBalance), 12.34);
+  t.is(
+    operation.destination,
+    'GBAF6NXN3DHSF357QBZLTBNWUTABKUODJXJYYE32ZDKA2QBM2H33IK6O'
+  );
+
+  const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
+  t.is(actualXdr, expectedXdr);
+});
+
+test('toTransaction.payment', t => {
   const txrep = `
   tx.sourceAccount: GAVRMS4QIOCC4QMOSKILOOOHCSO4FEKOXZPNLKFFN6W7SD2KUB7NBPLN
   tx.fee: 100

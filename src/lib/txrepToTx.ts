@@ -28,8 +28,10 @@ export function toTransaction(txrep: string): Transaction {
 
   const transaction = builder.build();
 
-  for (const signature of obj.signatures) {
-    transaction.signatures.push(toSignature(signature));
+  if (obj.signatures) {
+    for (const signature of obj.signatures) {
+      transaction.signatures.push(toSignature(signature));
+    }
   }
   return transaction;
 }
@@ -112,6 +114,12 @@ function toMemo(memo: any) {
   switch (memo.type) {
     case 'MEMO_TEXT':
       return Memo.text(memo.text);
+    case 'MEMO_ID':
+      return Memo.id(memo.id);
+    case 'MEMO_HASH':
+      return Memo.hash(memo.hash);
+    case 'MEMO_RETURN':
+      return Memo.return(memo.retHash);
     default:
       return Memo.none();
   }
@@ -123,7 +131,7 @@ function toTimebounds({ minTime, maxTime }) {
 
 function toAmount(amount: string, asset: Asset) {
   if (asset.isNative()) {
-    return (Number(amount) * 0.00001).toString(); // TODO: BigNumber
+    return (Number(amount) * 0.0000001).toString(); // TODO: BigNumber
   } else {
     return amount;
   }
