@@ -3,6 +3,7 @@ import {
   Asset,
   Memo,
   Operation,
+  TimeoutInfinite,
   Transaction,
   TransactionBuilder,
   xdr
@@ -10,7 +11,10 @@ import {
 
 import ldSet from 'lodash.set';
 
-export function toTransaction(txrep: string): Transaction {
+export function toTransaction(
+  txrep: string,
+  networkPassphrase?: string
+): Transaction {
   const obj: any = toObj(txrep);
   const account = new Account(obj.tx.sourceAccount, obj.tx.seqNum);
   // hack - build() will increment the sequence number so we have to decrement it first
@@ -18,9 +22,14 @@ export function toTransaction(txrep: string): Transaction {
   const opts = {
     memo: toMemo(obj.tx.memo),
     fee: toFee(obj.tx.fee),
-    timebounds: toTimebounds(obj.tx.timeBounds)
+    timebounds: toTimebounds(obj.tx.timeBounds),
+    networkPassphrase
   };
   const builder = new TransactionBuilder(account, opts);
+
+  if (!opts.timebounds) {
+    builder.setTimeout(TimeoutInfinite);
+  }
 
   for (const operation of obj.tx.operations) {
     builder.addOperation(toOperation(operation));
@@ -77,6 +86,7 @@ function parseValue(value: string) {
   if (value === 'true') {
     return true;
   }
+
   if (value === 'false') {
     return false;
   }
@@ -125,16 +135,24 @@ function toMemo(memo: any) {
   }
 }
 
-function toTimebounds({ minTime, maxTime }) {
+function toTimebounds(timeBounds) {
+  if (!timeBounds) {
+    return undefined;
+  }
+
+  const { minTime, maxTime } = timeBounds;
   return { minTime, maxTime };
 }
 
-function toAmount(amount: string, asset: Asset) {
-  if (asset.isNative()) {
-    return (Number(amount) * 0.0000001).toString(); // TODO: BigNumber
-  } else {
-    return amount;
-  }
+function toAmount(amount: string) {
+  return (Number(amount) * 0.0000001).toFixed(10); // TODO: BigNumber
+}
+
+function toPrice({ n, d }: { n: string; d: string }) {
+  return {
+    n: Number(n),
+    d: Number(d)
+  };
 }
 
 function toOperation({ sourceAccount, body }) {
@@ -148,12 +166,16 @@ function toOperation({ sourceAccount, body }) {
         body.pathPaymentStrictReceiveOp,
         sourceAccount
       );
+    case 'MANAGE_SELL_OFFER':
+      return toManageSellOffer(body.manageSellOfferOp, sourceAccount);
+    case 'CREATE_PASSIVE_SELL_OFFER':
+      return toCreatePassiveSellOffer(
+        body.createPassiveSellOfferOp,
+        sourceAccount
+      );
     default:
       throw new Error('Not implemented');
-    // case "MANAGE_SELL_OFFER":
-    //     return toManageSellOffer(body.manageSellOfferResult, sourceAccount);
-    // case "CREATE_PASSIVE_SELL_OFFER":
-    //     ManageSellOfferResult createPassiveSellOfferResult;
+
     // case "SET_OPTIONS":
     //     SetOptionsResult setOptionsResult;
     // case "CHANGE_TRUST":
@@ -178,38 +200,63 @@ function toCreateAccountOperation(op: any, source: string) {
   const { destination, startingBalance } = op;
   return Operation.createAccount({
     destination,
-    startingBalance: toAmount(startingBalance, Asset.native()),
+    startingBalance: toAmount(startingBalance),
     source
   });
 }
 
 function toPaymentOperation(op: any, source: string) {
-  const { destination, amount } = op;
-  const asset = toAsset(op.asset);
+  const { asset, destination, amount } = op;
+
   return Operation.payment({
     destination,
-    asset,
-    amount: toAmount(amount, asset),
+    asset: toAsset(asset),
+    amount: toAmount(amount),
     source
   });
 }
 
 function toPathPaymentStrictReceive(op: any, source: string) {
-  const { sendMax, destination, destAmount, path } = op;
-  const sendAsset = toAsset(op.sendAsset);
-  const destAsset = toAsset(op.destAsset);
+  const { sendAsset, destAsset, sendMax, destination, destAmount, path } = op;
+
   return Operation.pathPaymentStrictReceive({
-    sendAsset,
-    sendMax: toAmount(sendMax, sendAsset),
+    sendAsset: toAsset(sendAsset),
+    sendMax: toAmount(sendMax),
     destination,
-    destAsset,
-    destAmount: toAmount(destAmount, destAsset),
+    destAsset: toAsset(destAsset),
+    destAmount: toAmount(destAmount),
     path: path && path.map(toAsset),
     source
   });
 }
 
-function toSignature(sig) {
-  const { hint, signature } = sig;
+function toManageSellOffer(op: any, source: string) {
+  const { selling, buying, amount, price, offerID } = op;
+
+  return Operation.manageSellOffer({
+    selling: toAsset(selling),
+    buying: toAsset(buying),
+    amount: toAmount(amount),
+    price: toPrice(price),
+    offerId: offerID,
+    source
+  });
+}
+
+function toCreatePassiveSellOffer(op: any, source: string) {
+  const { selling, buying, amount, price } = op;
+
+  return Operation.createPassiveSellOffer({
+    selling: toAsset(selling),
+    buying: toAsset(buying),
+    amount: toAmount(amount),
+    price: toPrice(price),
+    source
+  });
+}
+
+function toSignature(sig: { hint: string; signature: string }) {
+  const hint = Buffer.from(sig.hint, 'hex');
+  const signature = Buffer.from(sig.signature, 'hex');
   return new xdr.DecoratedSignature({ hint, signature });
 }
