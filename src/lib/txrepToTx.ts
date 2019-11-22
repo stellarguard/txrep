@@ -112,7 +112,7 @@ function getStringValue(line: string) {
   return [value.trim(), line.slice(i + 1).trim()];
 }
 
-function getNonStringValue(line) {
+function getNonStringValue(line: string) {
   const spacePos = line.indexOf(' ');
   if (spacePos === -1) {
     return [line.trim(), ''];

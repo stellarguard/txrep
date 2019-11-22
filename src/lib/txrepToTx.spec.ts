@@ -225,3 +225,13 @@ test('parseLine string with comment', t => {
   t.is(value, 'Enjoy this transaction');
   t.is('this is a comment', comment);
 });
+
+test('parseLine string with escapes ', t => {
+  const { path, value, comment } = parseLine(
+    `tx.memo.text: "Enjoy \\\\ \\\\\\\" this transaction" this is " a comment`
+  );
+
+  t.is(path, 'tx.memo.text');
+  t.is(value, 'Enjoy \\ \\" this transaction');
+  t.is('this is " a comment', comment);
+});
