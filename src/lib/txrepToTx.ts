@@ -45,7 +45,7 @@ export function toTransaction(
   return transaction;
 }
 
-function toObj(txrep: string): object {
+export function toObj(txrep: string): object {
   const obj = {};
   const fields = txrep
     .split('\n')
@@ -56,7 +56,7 @@ function toObj(txrep: string): object {
   fields.forEach(({ path, value }) => {
     // meta-attributes will mess up arrays if converted directly to an object, so ignore them
     if (!path || !isMetaAttribute(path)) {
-      ldSet(obj, path, parseValue(value));
+      ldSet(obj, path, value);
     }
   });
 
@@ -69,18 +69,63 @@ function isMetaAttribute(path: string): boolean {
   return field === 'len' || field.startsWith('_');
 }
 
-function parseLine(line: string) {
+export function parseLine(line: string) {
+  const [path, remainingLine] = getPath(line);
+  const [value, comment] = getValue(remainingLine);
+  return { path, value: parseValue(value), comment };
+}
+
+function getPath(line: string) {
   const colonPos = line.indexOf(':');
-  const path = line.slice(0, colonPos);
-  const value = line.slice(colonPos + 1).trim();
-  return { path, value };
+  const path = line.slice(0, colonPos).trim();
+  const rest = line.slice(colonPos + 1).trim();
+  return [path, rest];
+}
+
+function getValue(line: string) {
+  if (line[0] === '"') {
+    return getStringValue(line);
+  } else {
+    return getNonStringValue(line);
+  }
+}
+
+function getStringValue(line: string) {
+  let value = '"';
+  let inEscapeSequence = false;
+  let i = 1;
+  for (; i < line.length; ++i) {
+    const char = line[i];
+    if (inEscapeSequence) {
+      value += char;
+      inEscapeSequence = false;
+    } else if (char === '\\') {
+      inEscapeSequence = true;
+    } else if (char === '"') {
+      value += char;
+      break;
+    } else {
+      value += char;
+    }
+  }
+
+  return [value.trim(), line.slice(i + 1).trim()];
+}
+
+function getNonStringValue(line) {
+  const spacePos = line.indexOf(' ');
+  if (spacePos === -1) {
+    return [line.trim(), ''];
+  } else {
+    const value = line.slice(0, spacePos);
+    const rest = line.slice(spacePos);
+    return [value.trim(), rest.trim()];
+  }
 }
 
 function parseValue(value: string) {
-  value = stripComments(value);
-
   if (value.startsWith('"') && value.endsWith('"')) {
-    return unescape(value.slice(1, -1));
+    return value.slice(1, -1);
   }
 
   if (value === 'true') {
@@ -92,11 +137,6 @@ function parseValue(value: string) {
   }
 
   return value;
-}
-
-function stripComments(value: string) {
-  // TODO: comments don't actually have to be wrapped in ()... oh bother.
-  return value.replace(/\([^()]*\)/g, '').trim();
 }
 
 function toFee(value: string): number {

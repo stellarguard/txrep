@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import test from 'ava';
 import { MemoNone, MemoText, Networks, Operation } from 'stellar-sdk';
-import { toTransaction } from './txrepToTx';
+import { parseLine, toTransaction } from './txrepToTx';
 
 test('toTransaction.createAccount', t => {
   const txrep = `
@@ -194,4 +194,34 @@ test('toTransaction.createPassiveSellOffer', t => {
   t.is(operation.price, '0.1');
   const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
   t.is(actualXdr, expectedXdr);
+});
+
+test('parseLine simple', t => {
+  const { path, value, comment } = parseLine(
+    `tx.sourceAccount: GAVRMS4QIOCC4QMOSKILOOOHCSO4FEKOXZPNLKFFN6W7SD2KUB7NBPLN`
+  );
+
+  t.is(path, 'tx.sourceAccount');
+  t.is(value, 'GAVRMS4QIOCC4QMOSKILOOOHCSO4FEKOXZPNLKFFN6W7SD2KUB7NBPLN');
+  t.is('', comment);
+});
+
+test('parseLine boolean with comment', t => {
+  const { path, value, comment } = parseLine(
+    `tx.operations[0].sourceAccount._present: true this is a comment`
+  );
+
+  t.is(path, 'tx.operations[0].sourceAccount._present');
+  t.is(value, true);
+  t.is('this is a comment', comment);
+});
+
+test('parseLine string with comment', t => {
+  const { path, value, comment } = parseLine(
+    `tx.memo.text: "Enjoy this transaction" this is a comment`
+  );
+
+  t.is(path, 'tx.memo.text');
+  t.is(value, 'Enjoy this transaction');
+  t.is('this is a comment', comment);
 });
