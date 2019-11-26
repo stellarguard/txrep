@@ -1,9 +1,9 @@
 // tslint:disable:no-expression-statement
 import test from 'ava';
-import { MemoNone, MemoText, Networks, Operation } from 'stellar-sdk';
+import { Networks } from 'stellar-sdk';
 import { parseLine, toTransaction } from './txrepToTx';
 
-test('toTransaction.createAccount', t => {
+test('createAccount', t => {
   const txrep = `
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
@@ -24,33 +24,11 @@ test('toTransaction.createAccount', t => {
 
   const expectedXdr = `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAEBfNu3YzyLvv4ByuYW2pMAVUcNN04wTesjUDUAs0fe0AAAAAAda70AAAAAAAAAAAA==`;
   const tx = toTransaction(txrep, Networks.TESTNET);
-
-  t.is(tx.source, 'GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF');
-  t.is(tx.fee, 100);
-  t.is(tx.sequence, '1375042369748993');
-  t.is(tx.timeBounds.minTime, '0');
-  t.is(tx.timeBounds.maxTime, '0');
-  t.is(tx.memo.type, MemoNone);
-
-  const operation = tx.operations[0] as Operation.CreateAccount;
-  t.is(operation.type, 'createAccount');
-  t.is(
-    operation.source,
-    'GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF'
-  );
-  t.is(Number(operation.startingBalance), 12.34);
-  t.is(
-    operation.destination,
-    'GBAF6NXN3DHSF357QBZLTBNWUTABKUODJXJYYE32ZDKA2QBM2H33IK6O'
-  );
-
   const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
   t.is(actualXdr, expectedXdr);
 });
 
-test('toTransaction.payment', t => {
-  const expectedXdr =
-    'AAAAACsWS5BDhC5BjpKQtznHFJ3CkU6+XtWopW+t+Q9KoH7QAAAAZAClKY0AAAABAAAAAQAAAABbicmAAAAAAF1q/QAAAAABAAAAFkVuam95IHRoaXMgdHJhbnNhY3Rpb24AAAAAAAEAAAAAAAAAAQAAAABAXzbt2M8i77+AcrmFtqTAFVHDTdOME3rI1A1ALNH3tAAAAAFVU0QAAAAAADJSVDIhkp9uz61Ra68rs3ScZIIgjT8ajX8Kkdc1be0LAAAAABfXk6AAAAAAAAAAAUqgftAAAABA3vtPH60cJ5MntVrxhP3N33P096jLQOflNKcdc6BRJLo2nbem0xtHyv0RhZIkaoV15sJJq5TsN2je22KSIhzlDA==';
+test('payment', t => {
   const txrep = `
   tx.sourceAccount: GAVRMS4QIOCC4QMOSKILOOOHCSO4FEKOXZPNLKFFN6W7SD2KUB7NBPLN
   tx.fee: 100
@@ -72,38 +50,42 @@ test('toTransaction.payment', t => {
   signatures[0].signature: defb4f1fad1c279327b55af184fdcddf73f4f7a8cb40e7e534a71d73a05124ba369db7a6d31b47cafd118592246a8575e6c249ab94ec3768dedb6292221ce50c
   `;
 
+  const expectedXdr =
+    'AAAAACsWS5BDhC5BjpKQtznHFJ3CkU6+XtWopW+t+Q9KoH7QAAAAZAClKY0AAAABAAAAAQAAAABbicmAAAAAAF1q/QAAAAABAAAAFkVuam95IHRoaXMgdHJhbnNhY3Rpb24AAAAAAAEAAAAAAAAAAQAAAABAXzbt2M8i77+AcrmFtqTAFVHDTdOME3rI1A1ALNH3tAAAAAFVU0QAAAAAADJSVDIhkp9uz61Ra68rs3ScZIIgjT8ajX8Kkdc1be0LAAAAABfXk6AAAAAAAAAAAUqgftAAAABA3vtPH60cJ5MntVrxhP3N33P096jLQOflNKcdc6BRJLo2nbem0xtHyv0RhZIkaoV15sJJq5TsN2je22KSIhzlDA==';
   const tx = toTransaction(txrep, Networks.TESTNET);
-
-  t.is(tx.source, 'GAVRMS4QIOCC4QMOSKILOOOHCSO4FEKOXZPNLKFFN6W7SD2KUB7NBPLN');
-  t.is(tx.fee, 100);
-  t.is(tx.sequence, '46489056724385793');
-  t.is(tx.timeBounds.minTime, '1535756672');
-  t.is(tx.timeBounds.maxTime, '1567292672');
-  t.is(tx.memo.type, MemoText);
-  t.is(tx.memo.value, 'Enjoy this transaction');
-
-  const operation = tx.operations[0] as Operation.Payment;
-  t.is(operation.source, undefined);
-  t.is(operation.type, 'payment');
-  t.is(operation.asset.code, 'USD');
-  t.is(
-    operation.asset.issuer,
-    'GAZFEVBSEGJJ63WPVVIWXLZLWN2JYZECECGT6GUNP4FJDVZVNXWQWMYI'
-  );
-  t.is(Number(operation.amount), 40.0004);
-
-  const signature = tx.signatures[0];
-  t.is(signature.hint().toString('hex'), '4aa07ed0');
-  t.is(
-    signature.signature().toString('hex'),
-    'defb4f1fad1c279327b55af184fdcddf73f4f7a8cb40e7e534a71d73a05124ba369db7a6d31b47cafd118592246a8575e6c249ab94ec3768dedb6292221ce50c'
-  );
-
   const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
   t.is(actualXdr, expectedXdr);
 });
 
-test('toTransaction.manageSellOffer', t => {
+test('pathPaymentStrictReceive', t => {
+  const expectedXdr = `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAIAAAACU1RFTExBUgAAAAAAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAADuaygAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAWWgvAAAAAACAAAAAAAAAAFVU0QAAAAAAEBfNu3YzyLvv4ByuYW2pMAVUcNN04wTesjUDUAs0fe0AAAAAAAAAAA=`;
+  const txrep = `
+ tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+ tx.fee: 100
+ tx.seqNum: 1375042369748993
+ tx.timeBounds._present: false
+ tx.memo.type: MEMO_NONE
+ tx.operations.len: 1
+ tx.operations[0].sourceAccount._present: false
+ tx.operations[0].body.type: PATH_PAYMENT_STRICT_RECEIVE
+ tx.operations[0].body.pathPaymentStrictReceiveOp.sendAsset: STELLAR:GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+ tx.operations[0].body.pathPaymentStrictReceiveOp.sendMax: 1000000000 (100e7)
+ tx.operations[0].body.pathPaymentStrictReceiveOp.destination: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+ tx.operations[0].body.pathPaymentStrictReceiveOp.destAsset: XLM
+ tx.operations[0].body.pathPaymentStrictReceiveOp.destAmount: 6000000000 (600e7)
+ tx.operations[0].body.pathPaymentStrictReceiveOp.path.len: 2
+ tx.operations[0].body.pathPaymentStrictReceiveOp.path[0]: XLM
+ tx.operations[0].body.pathPaymentStrictReceiveOp.path[1]: USD:GBAF6NXN3DHSF357QBZLTBNWUTABKUODJXJYYE32ZDKA2QBM2H33IK6O
+ tx.ext.v: 0
+ signatures.len: 0
+ `;
+
+  const tx = toTransaction(txrep, Networks.TESTNET);
+  const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
+  t.is(actualXdr, expectedXdr);
+});
+
+test('manageSellOffer', t => {
   const expectedXdr =
     'AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAMAAAACU1RFTExBUgAAAAAAAAAAAEBfNu3YzyLvv4ByuYW2pMAVUcNN04wTesjUDUAs0fe0AAAAAVVTRAAAAAAAQF827djPIu+/gHK5hbakwBVRw03TjBN6yNQNQCzR97QAAAAAO5rKAAAAAAQAAAABAAAAAAAAAZ4AAAAAAAAAAA==';
   const txrep = `
@@ -127,35 +109,11 @@ test('toTransaction.manageSellOffer', t => {
   `;
 
   const tx = toTransaction(txrep, Networks.TESTNET);
-
-  t.is(tx.source, 'GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF');
-
-  const operation = tx.operations[0] as Operation.ManageSellOffer;
-  t.is(operation.type, 'manageSellOffer');
-  t.is(
-    operation.source,
-    'GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF'
-  );
-  t.is(operation.selling.code, 'STELLAR');
-  t.is(
-    operation.selling.issuer,
-    'GBAF6NXN3DHSF357QBZLTBNWUTABKUODJXJYYE32ZDKA2QBM2H33IK6O'
-  );
-
-  t.is(operation.buying.code, 'USD');
-  t.is(
-    operation.buying.issuer,
-    'GBAF6NXN3DHSF357QBZLTBNWUTABKUODJXJYYE32ZDKA2QBM2H33IK6O'
-  );
-
-  t.is(Number(operation.amount), 100);
-  t.is(operation.price, '4');
-  t.is(operation.offerId, '414');
   const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
   t.is(actualXdr, expectedXdr);
 });
 
-test('toTransaction.createPassiveSellOffer', t => {
+test('createPassiveSellOffer', t => {
   const expectedXdr =
     'AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAQAAAAAAAAAAAAAAABJUE+AAAAAAQAAAAoAAAAAAAAAAA==';
   const txrep = `
@@ -178,20 +136,110 @@ test('toTransaction.createPassiveSellOffer', t => {
   `;
 
   const tx = toTransaction(txrep, Networks.TESTNET);
+  const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
+  t.is(actualXdr, expectedXdr);
+});
 
-  t.is(tx.source, 'GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF');
+test('setOptions (all filled)', t => {
+  const expectedXdr =
+    'AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAABAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAQAAAAMAAAABAAAABwAAAAEAAAABAAAAAQAAAAIAAAABAAAAAwAAAAEAAAAEAAAAAQAAAA9zdGVsbGFyZ3VhcmQubWUAAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAUAAAAAAAAAAA==';
+  const txrep = `
+  tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+  tx.fee: 100
+  tx.seqNum: 1375042369748993
+  tx.timeBounds._present: false
+  tx.memo.type: MEMO_NONE
+  tx.operations.len: 1
+  tx.operations[0].sourceAccount._present: false
+  tx.operations[0].body.type: SET_OPTIONS
+  tx.operations[0].body.setOptionsOp.inflationDest._present: true
+  tx.operations[0].body.setOptionsOp.inflationDest: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+  tx.operations[0].body.setOptionsOp.clearFlags._present: true
+  tx.operations[0].body.setOptionsOp.clearFlags: 3
+  tx.operations[0].body.setOptionsOp.setFlags._present: true
+  tx.operations[0].body.setOptionsOp.setFlags: 7
+  tx.operations[0].body.setOptionsOp.masterWeight._present: true
+  tx.operations[0].body.setOptionsOp.masterWeight: 1
+  tx.operations[0].body.setOptionsOp.lowThreshold._present: true
+  tx.operations[0].body.setOptionsOp.lowThreshold: 2
+  tx.operations[0].body.setOptionsOp.medThreshold._present: true
+  tx.operations[0].body.setOptionsOp.medThreshold: 3
+  tx.operations[0].body.setOptionsOp.highThreshold._present: true
+  tx.operations[0].body.setOptionsOp.highThreshold: 4
+  tx.operations[0].body.setOptionsOp.homeDomain._present: true
+  tx.operations[0].body.setOptionsOp.homeDomain: "stellarguard.me"
+  tx.operations[0].body.setOptionsOp.signer._present: true
+  tx.operations[0].body.setOptionsOp.signer.key: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+  tx.operations[0].body.setOptionsOp.signer.weight: 5
+  tx.ext.v: 0
+  signatures.len: 0
+  `;
 
-  const operation = tx.operations[0] as Operation.CreatePassiveSellOffer;
-  t.is(operation.type, 'createPassiveSellOffer');
-  t.is(
-    operation.source,
-    'GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF'
-  );
-  t.true(operation.selling.isNative());
-  t.true(operation.buying.isNative());
+  const tx = toTransaction(txrep, Networks.TESTNET);
 
-  t.is(Number(operation.amount), 123);
-  t.is(operation.price, '0.1');
+  const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
+  t.is(actualXdr, expectedXdr);
+});
+
+test('setOptions sha256Hash', t => {
+  const expectedXdr =
+    'AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAACkQMmldKxavDs6MmhFzaCpLp7nYnszI84tNc8il9QypsAAAAAAAAAAAAAAAA=';
+  const txrep = `
+tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.fee: 100
+tx.seqNum: 1375042369748993
+tx.timeBounds._present: false
+tx.memo.type: MEMO_NONE
+tx.operations.len: 1
+tx.operations[0].sourceAccount._present: false
+tx.operations[0].body.type: SET_OPTIONS
+tx.operations[0].body.setOptionsOp.inflationDest._present: false
+tx.operations[0].body.setOptionsOp.clearFlags._present: false
+tx.operations[0].body.setOptionsOp.setFlags._present: false
+tx.operations[0].body.setOptionsOp.masterWeight._present: false
+tx.operations[0].body.setOptionsOp.lowThreshold._present: false
+tx.operations[0].body.setOptionsOp.medThreshold._present: false
+tx.operations[0].body.setOptionsOp.highThreshold._present: false
+tx.operations[0].body.setOptionsOp.homeDomain._present: false
+tx.operations[0].body.setOptionsOp.signer._present: true
+tx.operations[0].body.setOptionsOp.signer.key: XCIQGJUV2KYWV4HM5DE2CFZWQKSLU645RHWMZDZYWTLTZCS7KDFJW3XV
+tx.operations[0].body.setOptionsOp.signer.weight: 0
+tx.ext.v: 0
+signatures.len: 0
+`;
+
+  const tx = toTransaction(txrep, Networks.TESTNET);
+  const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
+  t.is(actualXdr, expectedXdr);
+});
+
+test('setOptions preAuthTx', t => {
+  const expectedXdr = `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABkQMmldKxavDs6MmhFzaCpLp7nYnszI84tNc8il9QypsAAAAAAAAAAAAAAAA=`;
+  const txrep = `
+tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.fee: 100
+tx.seqNum: 1375042369748993
+tx.timeBounds._present: false
+tx.memo.type: MEMO_NONE
+tx.operations.len: 1
+tx.operations[0].sourceAccount._present: false
+tx.operations[0].body.type: SET_OPTIONS
+tx.operations[0].body.setOptionsOp.inflationDest._present: false
+tx.operations[0].body.setOptionsOp.clearFlags._present: false
+tx.operations[0].body.setOptionsOp.setFlags._present: false
+tx.operations[0].body.setOptionsOp.masterWeight._present: false
+tx.operations[0].body.setOptionsOp.lowThreshold._present: false
+tx.operations[0].body.setOptionsOp.medThreshold._present: false
+tx.operations[0].body.setOptionsOp.highThreshold._present: false
+tx.operations[0].body.setOptionsOp.homeDomain._present: false
+tx.operations[0].body.setOptionsOp.signer._present: true
+tx.operations[0].body.setOptionsOp.signer.key: TCIQGJUV2KYWV4HM5DE2CFZWQKSLU645RHWMZDZYWTLTZCS7KDFJX7SM
+tx.operations[0].body.setOptionsOp.signer.weight: 0
+tx.ext.v: 0
+signatures.len: 0
+`;
+
+  const tx = toTransaction(txrep, Networks.TESTNET);
   const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
   t.is(actualXdr, expectedXdr);
 });

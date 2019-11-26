@@ -3,12 +3,14 @@ import {
   Asset,
   Memo,
   Operation,
+  StrKey,
   TimeoutInfinite,
   Transaction,
   TransactionBuilder,
   xdr
 } from 'stellar-sdk';
 
+import BigNumber from 'bignumber.js';
 import ldSet from 'lodash.set';
 
 export function toTransaction(
@@ -185,7 +187,7 @@ function toTimebounds(timeBounds) {
 }
 
 function toAmount(amount: string) {
-  return (Number(amount) * 0.0000001).toFixed(10); // TODO: BigNumber
+  return new BigNumber(amount).div(10000000).toFixed(10);
 }
 
 function toPrice({ n, d }: { n: string; d: string }) {
@@ -213,11 +215,11 @@ function toOperation({ sourceAccount, body }) {
         body.createPassiveSellOfferOp,
         sourceAccount
       );
+    case 'SET_OPTIONS':
+      return toSetOptions(body.setOptionsOp, sourceAccount);
     default:
       throw new Error('Not implemented');
 
-    // case "SET_OPTIONS":
-    //     SetOptionsResult setOptionsResult;
     // case "CHANGE_TRUST":
     //     ChangeTrustResult changeTrustResult;
     // case "ALLOW_TRUST":
@@ -291,6 +293,45 @@ function toCreatePassiveSellOffer(op: any, source: string) {
     buying: toAsset(buying),
     amount: toAmount(amount),
     price: toPrice(price),
+    source
+  });
+}
+
+function toSetOptions(op: any, source: string) {
+  const {
+    inflationDest,
+    clearFlags,
+    setFlags,
+    masterWeight,
+    lowThreshold,
+    medThreshold,
+    highThreshold,
+    homeDomain,
+    signer
+  } = op;
+
+  switch (signer.key.charAt(0)) {
+    case 'G':
+      signer.ed25519PublicKey = signer.key;
+      break;
+    case 'X':
+      signer.sha256Hash = StrKey.decodeSha256Hash(signer.key);
+      break;
+    case 'T':
+      signer.preAuthTx = StrKey.decodePreAuthTx(signer.key);
+      break;
+  }
+
+  return Operation.setOptions({
+    inflationDest,
+    clearFlags,
+    setFlags,
+    masterWeight,
+    lowThreshold,
+    medThreshold,
+    highThreshold,
+    homeDomain,
+    signer,
     source
   });
 }

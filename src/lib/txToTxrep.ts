@@ -1,4 +1,17 @@
-import { Asset, Memo, Operation, Transaction, xdr } from 'stellar-sdk';
+import toSnakeCase from 'lodash.snakecase';
+import {
+  Asset,
+  Memo,
+  Operation,
+  Signer,
+  StrKey,
+  Transaction,
+  xdr
+} from 'stellar-sdk';
+
+import { best_r } from './utils';
+
+type LineAdder = (k: string, v: any, optional?: boolean) => void;
 
 export function toTxrep(transaction: Transaction) {
   const lines = [];
@@ -11,6 +24,7 @@ export function toTxrep(transaction: Transaction) {
   addOperations(transaction.operations, lines);
   addLine('tx.ext.v', 0, lines);
   addSignatures(transaction.signatures, lines);
+
   return lines.join('\n');
 }
 
@@ -78,22 +92,142 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
     addOpLine('sourceAccount._present', false);
   }
 
+  const type = upperSnakeCase(operation.type);
+  addOpLine('body.type', type);
+  const addBodyLine = (k: string, v: any, optional = false) => {
+    const key = `body.${operation.type}Op.${k}`;
+    if (optional) {
+      const present = v !== null && v !== undefined;
+      addOpLine(`${key}._present`, present);
+      if (present) {
+        addOpLine(key, v);
+      }
+    } else {
+      addOpLine(key, v);
+    }
+  };
   switch (operation.type) {
+    case 'createAccount':
+      addCreateAccountOperation(operation, addBodyLine);
+      return;
     case 'payment':
-      addPaymentOperation(operation, addOpLine);
+      addPaymentOperation(operation, addBodyLine);
+      return;
+    case 'pathPaymentStrictReceive':
+      addPathPaymentStrictReceiveOp(operation, addBodyLine);
+      return;
+    case 'manageSellOffer':
+      addManageSellOfferOp(operation, addBodyLine);
+      return;
+    case 'createPassiveSellOffer':
+      addCreatePassiveSellOfferOp(operation, addBodyLine);
+      return;
+    case 'setOptions':
+      addSetOptionsOp(operation, addBodyLine);
       return;
     default:
       throw Error('Not implemented');
   }
 }
 
-function addPaymentOperation(operation: Operation.Payment, addOpLine: any) {
-  addOpLine('body.type', 'PAYMENT');
-  const addPaymentOpLine = (k: string, v: any) =>
-    addOpLine(`body.paymentOp.${k}`, v);
-  addPaymentOpLine('destination', operation.destination);
-  addPaymentOpLine('asset', toAsset(operation.asset));
-  addPaymentOpLine('amount', toAmount(operation.amount));
+function upperSnakeCase(s: string): string {
+  return (toSnakeCase(s) as string).toUpperCase();
+}
+
+function addCreateAccountOperation(
+  operation: Operation.CreateAccount,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('destination', operation.destination);
+  addBodyLine('startingBalance', toAmount(operation.startingBalance));
+}
+
+function addPaymentOperation(
+  operation: Operation.Payment,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('destination', operation.destination);
+  addBodyLine('asset', toAsset(operation.asset));
+  addBodyLine('amount', toAmount(operation.amount));
+}
+
+function addPathPaymentStrictReceiveOp(
+  operation: Operation.PathPaymentStrictReceive,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('sendAsset', toAsset(operation.sendAsset));
+  addBodyLine('sendMax', toAmount(operation.sendMax));
+  addBodyLine('destination', operation.destination);
+  addBodyLine('destAsset', toAsset(operation.destAsset));
+  addBodyLine('destAmount', toAmount(operation.destAmount));
+  addBodyLine('path.len', operation.path.length);
+  operation.path.forEach((asset, i) => {
+    addBodyLine(`path[${i}]`, toAsset(asset));
+  });
+}
+
+function addManageSellOfferOp(
+  operation: Operation.ManageSellOffer,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('selling', toAsset(operation.selling));
+  addBodyLine('buying', toAsset(operation.buying));
+  addBodyLine('amount', toAmount(operation.amount));
+  addPrice(operation.price, addBodyLine);
+  addBodyLine('offerID', operation.offerId);
+}
+
+function addCreatePassiveSellOfferOp(
+  operation: Operation.CreatePassiveSellOffer,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('selling', toAsset(operation.selling));
+  addBodyLine('buying', toAsset(operation.buying));
+  addBodyLine('amount', toAmount(operation.amount));
+  addPrice(operation.price, addBodyLine);
+}
+
+function addSetOptionsOp(
+  operation: Operation.SetOptions,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('inflationDest', operation.inflationDest, true);
+  addBodyLine('clearFlags', operation.clearFlags, true);
+  addBodyLine('setFlags', operation.setFlags, true);
+  addBodyLine('masterWeight', operation.masterWeight, true);
+  addBodyLine('lowThreshold', operation.lowThreshold, true);
+  addBodyLine('medThreshold', operation.medThreshold, true);
+  addBodyLine('highThreshold', operation.highThreshold, true);
+  addBodyLine('homeDomain', toString(operation.homeDomain), true);
+  addSigner(operation.signer, addBodyLine);
+}
+
+function addPrice(price: string, addBodyLine: LineAdder) {
+  const [n, d] = best_r(price);
+  addBodyLine('price.n', n);
+  addBodyLine('price.d', d);
+}
+
+function addSigner(signer: Signer, addBodyLine: LineAdder) {
+  addBodyLine('signer._present', !!signer);
+  if ((signer as Signer.Ed25519PublicKey).ed25519PublicKey) {
+    addBodyLine(
+      'signer.key',
+      (signer as Signer.Ed25519PublicKey).ed25519PublicKey
+    );
+  } else if ((signer as Signer.PreAuthTx).preAuthTx) {
+    addBodyLine(
+      'signer.key',
+      StrKey.encodePreAuthTx((signer as Signer.PreAuthTx).preAuthTx)
+    );
+  } else if ((signer as Signer.Sha256Hash).sha256Hash) {
+    addBodyLine(
+      'signer.key',
+      StrKey.encodeSha256Hash((signer as Signer.Sha256Hash).sha256Hash)
+    );
+  }
+
+  addBodyLine('signer.weight', signer.weight);
 }
 
 function toAsset(asset: Asset) {
@@ -106,6 +240,10 @@ function toAsset(asset: Asset) {
 
 function toAmount(amount: string) {
   return Number(amount) * 10000000;
+}
+
+function toString(value: string) {
+  return JSON.stringify(value);
 }
 
 function addSignatures(signatures: xdr.DecoratedSignature[], lines: string[]) {
