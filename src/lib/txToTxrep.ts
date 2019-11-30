@@ -320,6 +320,23 @@ function addManageBuyOfferOp(
   addBodyLine('offerID', operation.offerId);
 }
 
+function addSignatures(signatures: xdr.DecoratedSignature[], lines: string[]) {
+  addLine('signatures.len', signatures.length, lines);
+  signatures.forEach((signature, i) => {
+    addSignature(signature, i, lines);
+  });
+}
+
+function addSignature(
+  signature: xdr.DecoratedSignature,
+  i: number,
+  lines: string[]
+) {
+  const prefix = `signatures[${i}]`;
+  addLine(`${prefix}.hint`, toOpaque(signature.hint()), lines);
+  addLine(`${prefix}.signature`, toOpaque(signature.signature()), lines);
+}
+
 function toAsset(asset: Asset) {
   if (asset.isNative()) {
     return 'XLM';
@@ -338,21 +355,4 @@ function toString(value: string) {
 
 function toOpaque(value: string | Buffer) {
   return value.toString('hex');
-}
-
-function addSignatures(signatures: xdr.DecoratedSignature[], lines: string[]) {
-  addLine('signatures.len', signatures.length, lines);
-  signatures.forEach((signature, i) => {
-    addSignature(signature, i, lines);
-  });
-}
-
-function addSignature(
-  signature: xdr.DecoratedSignature,
-  i: number,
-  lines: string[]
-) {
-  const prefix = `signatures[${i}]`;
-  addLine(`${prefix}.hint`, toOpaque(signature.hint()), lines);
-  addLine(`${prefix}.signature`, toOpaque(signature.signature()), lines);
 }

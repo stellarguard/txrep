@@ -147,58 +147,6 @@ function toFee(value: string): number {
   return Number(value);
 }
 
-function toAsset(value: string): Asset {
-  if (!value) {
-    return undefined;
-  }
-
-  if (value === 'XLM') {
-    return Asset.native();
-  }
-
-  if (value === 'native') {
-    return Asset.native();
-  }
-
-  const [code, issuer] = value.split(':');
-  return new Asset(code, issuer);
-}
-
-function toMemo(memo: any) {
-  switch (memo.type) {
-    case 'MEMO_TEXT':
-      return Memo.text(memo.text);
-    case 'MEMO_ID':
-      return Memo.id(memo.id);
-    case 'MEMO_HASH':
-      return Memo.hash(memo.hash);
-    case 'MEMO_RETURN':
-      return Memo.return(memo.retHash);
-    default:
-      return Memo.none();
-  }
-}
-
-function toTimebounds(timeBounds) {
-  if (!timeBounds) {
-    return undefined;
-  }
-
-  const { minTime, maxTime } = timeBounds;
-  return { minTime, maxTime };
-}
-
-function toAmount(amount: string) {
-  return new BigNumber(amount).div(10000000).toFixed(10);
-}
-
-function toPrice({ n, d }: { n: string; d: string }) {
-  return {
-    n: Number(n),
-    d: Number(d)
-  };
-}
-
 function toOperation({ sourceAccount, body }) {
   switch (body.type) {
     case 'CREATE_ACCOUNT':
@@ -224,25 +172,18 @@ function toOperation({ sourceAccount, body }) {
       );
     case 'SET_OPTIONS':
       return toSetOptions(body.setOptionsOp, sourceAccount);
-
     case 'CHANGE_TRUST':
       return toChangeTrust(body.changeTrustOp, sourceAccount);
-
     case 'ALLOW_TRUST':
       return toAllowTrust(body.allowTrustOp, sourceAccount);
-
     case 'ACCOUNT_MERGE':
       return toAccountMerge(body.accountMergeOp, sourceAccount);
-
     case 'MANAGE_DATA':
       return toManageData(body.manageDataOp, sourceAccount);
-
     case 'BUMP_SEQUENCE':
       return toBumpSequence(body.bumpSequenceOp, sourceAccount);
-
     case 'MANAGE_BUY_OFFER':
       return toManageBuyOffer(body.manageBuyOfferOp, sourceAccount);
-
     default:
       throw new Error('Not implemented');
   }
@@ -492,4 +433,56 @@ function toSignature(sig: { hint: string; signature: string }) {
   const hint = Buffer.from(sig.hint, 'hex');
   const signature = Buffer.from(sig.signature, 'hex');
   return new xdr.DecoratedSignature({ hint, signature });
+}
+
+function toAsset(value: string): Asset {
+  if (!value) {
+    return undefined;
+  }
+
+  if (value === 'XLM') {
+    return Asset.native();
+  }
+
+  if (value === 'native') {
+    return Asset.native();
+  }
+
+  const [code, issuer] = value.split(':');
+  return new Asset(code, issuer);
+}
+
+function toMemo(memo: any) {
+  switch (memo.type) {
+    case 'MEMO_TEXT':
+      return Memo.text(memo.text);
+    case 'MEMO_ID':
+      return Memo.id(memo.id);
+    case 'MEMO_HASH':
+      return Memo.hash(memo.hash);
+    case 'MEMO_RETURN':
+      return Memo.return(memo.retHash);
+    default:
+      return Memo.none();
+  }
+}
+
+function toTimebounds(timeBounds) {
+  if (!timeBounds) {
+    return undefined;
+  }
+
+  const { minTime, maxTime } = timeBounds;
+  return { minTime, maxTime };
+}
+
+function toAmount(amount: string) {
+  return new BigNumber(amount).div(10000000).toFixed(10);
+}
+
+function toPrice({ n, d }: { n: string; d: string }) {
+  return {
+    n: Number(n),
+    d: Number(d)
+  };
 }
