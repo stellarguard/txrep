@@ -244,6 +244,31 @@ signatures.len: 0
   t.is(actualXdr, expectedXdr);
 });
 
+test('changeTrust', t => {
+  const expectedXdr = `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAYAAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAABdIdugAAAAAAAAAAAA=`;
+  const txrep = `
+  tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+  tx.fee: 100
+  tx.seqNum: 1375042369748993
+  tx.timeBounds._present: false
+  tx.memo.type: MEMO_NONE
+  tx.operations.len: 1
+  tx.operations[0].sourceAccount._present: true
+  tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+  tx.operations[0].body.type: CHANGE_TRUST
+  tx.operations[0].body.changeTrustOp.line: USD:GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+  tx.operations[0].body.changeTrustOp.limit: 100000000000
+  tx.ext.v: 0
+  signatures.len: 0
+`;
+
+  const tx = toTransaction(txrep, Networks.TESTNET);
+  const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
+  t.is(actualXdr, expectedXdr);
+});
+
+// internal functions
+
 test('parseLine simple', t => {
   const { path, value, comment } = parseLine(
     `tx.sourceAccount: GAVRMS4QIOCC4QMOSKILOOOHCSO4FEKOXZPNLKFFN6W7SD2KUB7NBPLN`

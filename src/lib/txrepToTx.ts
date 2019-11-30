@@ -1,8 +1,10 @@
 import {
   Account,
   Asset,
+  AuthFlag,
   Memo,
   Operation,
+  SignerOptions,
   StrKey,
   TimeoutInfinite,
   Transaction,
@@ -217,11 +219,13 @@ function toOperation({ sourceAccount, body }) {
       );
     case 'SET_OPTIONS':
       return toSetOptions(body.setOptionsOp, sourceAccount);
+
+    case 'CHANGE_TRUST':
+      return toChangeTrust(body.changeTrustOp, sourceAccount);
+
     default:
       throw new Error('Not implemented');
 
-    // case "CHANGE_TRUST":
-    //     ChangeTrustResult changeTrustResult;
     // case "ALLOW_TRUST":
     //     AllowTrustResult allowTrustResult;
     // case "ACCOUNT_MERGE":
@@ -297,7 +301,22 @@ function toCreatePassiveSellOffer(op: any, source: string) {
   });
 }
 
-function toSetOptions(op: any, source: string) {
+type SetOptionsOp = {
+  inflationDest?: string;
+  clearFlags?: AuthFlag;
+  setFlags?: AuthFlag;
+  masterWeight?: string;
+  lowThreshold?: string;
+  medThreshold?: string;
+  highThreshold?: string;
+  homeDomain?: string;
+  signer?: {
+    key: string;
+    weight: string;
+  };
+};
+
+function toSetOptions(op: SetOptionsOp, source: string) {
   const {
     inflationDest,
     clearFlags,
@@ -310,16 +329,28 @@ function toSetOptions(op: any, source: string) {
     signer
   } = op;
 
-  switch (signer.key.charAt(0)) {
-    case 'G':
-      signer.ed25519PublicKey = signer.key;
-      break;
-    case 'X':
-      signer.sha256Hash = StrKey.decodeSha256Hash(signer.key);
-      break;
-    case 'T':
-      signer.preAuthTx = StrKey.decodePreAuthTx(signer.key);
-      break;
+  let signerOptions: SignerOptions;
+  if (signer) {
+    switch (signer.key.charAt(0)) {
+      case 'G':
+        signerOptions = {
+          ed25519PublicKey: signer.key,
+          weight: signer.weight
+        };
+        break;
+      case 'X':
+        signerOptions = {
+          sha256Hash: StrKey.decodeSha256Hash(signer.key),
+          weight: signer.weight
+        };
+        break;
+      case 'T':
+        signerOptions = {
+          preAuthTx: StrKey.decodePreAuthTx(signer.key),
+          weight: signer.weight
+        };
+        break;
+    }
   }
 
   return Operation.setOptions({
@@ -331,7 +362,21 @@ function toSetOptions(op: any, source: string) {
     medThreshold,
     highThreshold,
     homeDomain,
-    signer,
+    signer: signerOptions,
+    source
+  });
+}
+
+type ChangeTrustOp = {
+  line: string;
+  limit: string | undefined;
+};
+
+function toChangeTrust(op: ChangeTrustOp, source: string) {
+  const { line, limit } = op;
+  return Operation.changeTrust({
+    asset: toAsset(line),
+    limit: limit && toAmount(limit),
     source
   });
 }

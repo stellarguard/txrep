@@ -125,6 +125,9 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
     case 'setOptions':
       addSetOptionsOp(operation, addBodyLine);
       return;
+    case 'changeTrust':
+      addChangeTrustOp(operation, addBodyLine);
+      return;
     default:
       throw Error('Not implemented');
   }
@@ -228,6 +231,16 @@ function addSigner(signer: Signer, addBodyLine: LineAdder) {
   }
 
   addBodyLine('signer.weight', signer.weight);
+}
+
+function addChangeTrustOp(
+  operation: Operation.ChangeTrust,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('line', toAsset(operation.line));
+  if (operation.limit) {
+    addBodyLine('limit', toAmount(operation.limit));
+  }
 }
 
 function toAsset(asset: Asset) {
