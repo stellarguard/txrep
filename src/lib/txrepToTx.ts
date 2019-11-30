@@ -228,15 +228,16 @@ function toOperation({ sourceAccount, body }) {
 
     case 'ACCOUNT_MERGE':
       return toAccountMerge(body.accountMergeOp, sourceAccount);
+
+    case 'MANAGE_DATA':
+      return toManageData(body.manageDataOp, sourceAccount);
+
+    case 'BUMP_SEQUENCE':
+      return toBumpSequence(body.bumpSequenceOp, sourceAccount);
+
     default:
       throw new Error('Not implemented');
 
-    // case "ACCOUNT_MERGE":
-    //     AccountMergeResult accountMergeResult;
-    // case "INFLATION":
-    //     InflationResult inflationResult;
-    // case "MANAGE_DATA":
-    //     ManageDataResult manageDataResult;
     // case "BUMP_SEQUENCE":
     //     BumpSequenceResult bumpSeqResult;
     // case "MANAGE_BUY_OFFER":
@@ -408,6 +409,30 @@ function toAccountMerge(op: AccountMergeOp, source: string) {
   const { destination } = op;
   return Operation.accountMerge({
     destination,
+    source
+  });
+}
+
+type ManageDataOp = {
+  dataName: string;
+  dataValue?: string;
+};
+
+function toManageData(op: ManageDataOp, source: string) {
+  const { dataName, dataValue } = op;
+  const value = Buffer.from(dataValue, 'hex');
+  return Operation.manageData({ name: dataName, value, source });
+}
+
+type BumpSequenceOp = {
+  bumpTo: string;
+};
+
+function toBumpSequence(op: BumpSequenceOp, source: string) {
+  const { bumpTo } = op;
+
+  return Operation.bumpSequence({
+    bumpTo,
     source
   });
 }

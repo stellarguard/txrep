@@ -134,6 +134,12 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
     case 'accountMerge':
       addAccountMergeOp(operation, addBodyLine);
       return;
+    case 'manageData':
+      addManageDataOp(operation, addBodyLine);
+      return;
+    case 'bumpSequence':
+      addBumpSequenceOp(operation, addBodyLine);
+      return;
     default:
       throw Error(`${operation.type} is not implemented`);
   }
@@ -265,6 +271,24 @@ function addAccountMergeOp(
   addBodyLine('destination', operation.destination);
 }
 
+function addManageDataOp(
+  operation: Operation.ManageData,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('dataName', toString(operation.name));
+  addBodyLine('dataValue._present', !!operation.value);
+  if (operation.value) {
+    addBodyLine('dataValue', toOpaque(operation.value));
+  }
+}
+
+function addBumpSequenceOp(
+  operation: Operation.BumpSequence,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('bumpTo', operation.bumpTo);
+}
+
 function toAsset(asset: Asset) {
   if (asset.isNative()) {
     return 'XLM';
@@ -281,6 +305,10 @@ function toString(value: string) {
   return JSON.stringify(value);
 }
 
+function toOpaque(value: string | Buffer) {
+  return value.toString('hex');
+}
+
 function addSignatures(signatures: xdr.DecoratedSignature[], lines: string[]) {
   addLine('signatures.len', signatures.length, lines);
   signatures.forEach((signature, i) => {
@@ -294,6 +322,6 @@ function addSignature(
   lines: string[]
 ) {
   const prefix = `signatures[${i}]`;
-  addLine(`${prefix}.hint`, signature.hint().toString('hex'), lines);
-  addLine(`${prefix}.signature`, signature.signature().toString('hex'), lines);
+  addLine(`${prefix}.hint`, toOpaque(signature.hint()), lines);
+  addLine(`${prefix}.signature`, toOpaque(signature.signature()), lines);
 }

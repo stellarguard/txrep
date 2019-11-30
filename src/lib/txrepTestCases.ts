@@ -323,3 +323,48 @@ signatures.len: 0
 };
 
 testCases.push(accountMerge);
+
+const manageData = {
+  description: 'manageData',
+  xdr: `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAoAAAAMc3RlbGxhcmd1YXJkAAAAAQAAAAwibmljZSBkYXRhISIAAAAAAAAAAA==`,
+  txrep: `
+tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.fee: 100
+tx.seqNum: 1375042369748993
+tx.timeBounds._present: false
+tx.memo.type: MEMO_NONE
+tx.operations.len: 1
+tx.operations[0].sourceAccount._present: true
+tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.type: MANAGE_DATA
+tx.operations[0].body.manageDataOp.dataName: "stellarguard"
+tx.operations[0].body.manageDataOp.dataValue._present: true
+tx.operations[0].body.manageDataOp.dataValue: 226e69636520646174612122
+tx.ext.v: 0
+signatures.len: 0
+
+`
+};
+
+testCases.push(manageData);
+
+const bumpSequence = {
+  description: 'bumpSequence',
+  xdr: `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAsAAAAAAAAAZAAAAAAAAAAA`,
+  txrep: `
+tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.fee: 100
+tx.seqNum: 1375042369748993
+tx.timeBounds._present: false
+tx.memo.type: MEMO_NONE
+tx.operations.len: 1
+tx.operations[0].sourceAccount._present: true
+tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.type: BUMP_SEQUENCE
+tx.operations[0].body.bumpSequenceOp.bumpTo: 100
+tx.ext.v: 0
+signatures.len: 0
+`
+};
+
+testCases.push(bumpSequence);
