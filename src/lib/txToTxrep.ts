@@ -140,6 +140,9 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
     case 'bumpSequence':
       addBumpSequenceOp(operation, addBodyLine);
       return;
+    case 'manageBuyOffer':
+      addManageBuyOfferOp(operation, addBodyLine);
+      return;
     default:
       throw Error(`${operation.type} is not implemented`);
   }
@@ -287,6 +290,17 @@ function addBumpSequenceOp(
   addBodyLine: LineAdder
 ) {
   addBodyLine('bumpTo', operation.bumpTo);
+}
+
+function addManageBuyOfferOp(
+  operation: Operation.ManageBuyOffer,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('selling', toAsset(operation.selling));
+  addBodyLine('buying', toAsset(operation.buying));
+  addBodyLine('buyAmount', toAmount(operation.buyAmount));
+  addPrice(operation.price, addBodyLine);
+  addBodyLine('offerID', operation.offerId);
 }
 
 function toAsset(asset: Asset) {

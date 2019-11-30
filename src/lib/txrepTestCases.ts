@@ -368,3 +368,29 @@ signatures.len: 0
 };
 
 testCases.push(bumpSequence);
+
+const manageBuyOffer = {
+  description: 'manageBuyOffer',
+  xdr: `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAwAAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAAAAAAA7msoAAAAAHsAAAABAAAAAAAAAcgAAAAAAAAAAA==`,
+  txrep: `
+tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.fee: 100
+tx.seqNum: 1375042369748993
+tx.timeBounds._present: false
+tx.memo.type: MEMO_NONE
+tx.operations.len: 1
+tx.operations[0].sourceAccount._present: true
+tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.type: MANAGE_BUY_OFFER
+tx.operations[0].body.manageBuyOfferOp.selling: USD:GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.manageBuyOfferOp.buying: XLM
+tx.operations[0].body.manageBuyOfferOp.buyAmount: 4000000000
+tx.operations[0].body.manageBuyOfferOp.price.n: 123
+tx.operations[0].body.manageBuyOfferOp.price.d: 1
+tx.operations[0].body.manageBuyOfferOp.offerID: 456
+tx.ext.v: 0
+signatures.len: 0
+`
+};
+
+testCases.push(manageBuyOffer);

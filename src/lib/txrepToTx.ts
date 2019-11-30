@@ -235,11 +235,11 @@ function toOperation({ sourceAccount, body }) {
     case 'BUMP_SEQUENCE':
       return toBumpSequence(body.bumpSequenceOp, sourceAccount);
 
+    case 'MANAGE_BUY_OFFER':
+      return toManageBuyOffer(body.manageBuyOfferOp, sourceAccount);
     default:
       throw new Error('Not implemented');
 
-    // case "BUMP_SEQUENCE":
-    //     BumpSequenceResult bumpSeqResult;
     // case "MANAGE_BUY_OFFER":
     //     ManageBuyOfferResult manageBuyOfferResult;
     // case "PATH_PAYMENT_STRICT_SEND":
@@ -280,13 +280,48 @@ function toPathPaymentStrictReceive(op: any, source: string) {
   });
 }
 
-function toManageSellOffer(op: any, source: string) {
+type ManageSellOfferOp = {
+  selling: string;
+  buying: string;
+  amount: string;
+  price: {
+    d: string;
+    n: string;
+  };
+  offerID: string;
+};
+
+function toManageSellOffer(op: ManageSellOfferOp, source: string) {
   const { selling, buying, amount, price, offerID } = op;
 
   return Operation.manageSellOffer({
     selling: toAsset(selling),
     buying: toAsset(buying),
     amount: toAmount(amount),
+    price: toPrice(price),
+    offerId: offerID,
+    source
+  });
+}
+
+type ManageBuyOfferOp = {
+  selling: string;
+  buying: string;
+  buyAmount: string;
+  price: {
+    d: string;
+    n: string;
+  };
+  offerID: string;
+};
+
+function toManageBuyOffer(op: ManageBuyOfferOp, source: string) {
+  const { selling, buying, buyAmount, price, offerID } = op;
+
+  return Operation.manageBuyOffer({
+    selling: toAsset(selling),
+    buying: toAsset(buying),
+    buyAmount: toAmount(buyAmount),
     price: toPrice(price),
     offerId: offerID,
     source
