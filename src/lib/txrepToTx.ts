@@ -223,6 +223,9 @@ function toOperation({ sourceAccount, body }) {
     case 'CHANGE_TRUST':
       return toChangeTrust(body.changeTrustOp, sourceAccount);
 
+    case 'ALLOW_TRUST':
+      return toAllowTrust(body.allowTrustOp, sourceAccount);
+
     default:
       throw new Error('Not implemented');
 
@@ -377,6 +380,22 @@ function toChangeTrust(op: ChangeTrustOp, source: string) {
   return Operation.changeTrust({
     asset: toAsset(line),
     limit: limit && toAmount(limit),
+    source
+  });
+}
+
+type AllowTrustOp = {
+  trustor: string;
+  asset: string;
+  authorize: boolean;
+};
+
+function toAllowTrust(op: AllowTrustOp, source: string) {
+  const { trustor, asset, authorize } = op;
+  return Operation.allowTrust({
+    trustor,
+    authorize,
+    assetCode: asset,
     source
   });
 }

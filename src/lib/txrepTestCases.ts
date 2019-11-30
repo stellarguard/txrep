@@ -279,3 +279,26 @@ signatures.len: 0
 };
 
 testCases.push(changeTrust);
+
+const allowTrust = {
+  description: 'allowTrust',
+  xdr: `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAcAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAABVVNEAAAAAAEAAAAAAAAAAA==`,
+  txrep: `
+tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.fee: 100
+tx.seqNum: 1375042369748993
+tx.timeBounds._present: false
+tx.memo.type: MEMO_NONE
+tx.operations.len: 1
+tx.operations[0].sourceAccount._present: true
+tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.type: ALLOW_TRUST
+tx.operations[0].body.allowTrustOp.trustor: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.allowTrustOp.asset: USD
+tx.operations[0].body.allowTrustOp.authorize: true
+tx.ext.v: 0
+signatures.len: 0
+`
+};
+
+testCases.push(allowTrust);

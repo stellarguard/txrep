@@ -128,8 +128,11 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
     case 'changeTrust':
       addChangeTrustOp(operation, addBodyLine);
       return;
+    case 'allowTrust':
+      addAllowTrustOp(operation, addBodyLine);
+      return;
     default:
-      throw Error('Not implemented');
+      throw Error(`${operation.type} is not implemented`);
   }
 }
 
@@ -241,6 +244,15 @@ function addChangeTrustOp(
   if (operation.limit) {
     addBodyLine('limit', toAmount(operation.limit));
   }
+}
+
+function addAllowTrustOp(
+  operation: Operation.AllowTrust,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('trustor', operation.trustor);
+  addBodyLine('asset', operation.assetCode);
+  addBodyLine('authorize', operation.authorize);
 }
 
 function toAsset(asset: Asset) {
