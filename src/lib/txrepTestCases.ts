@@ -394,3 +394,56 @@ signatures.len: 0
 };
 
 testCases.push(manageBuyOffer);
+
+const pathPaymentStrictSend = {
+  description: 'pathPaymentStrictSend',
+  xdr: `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAA0AAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAABHhowAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAAAAAABJUE+AAAAAAQAAAAJTVEVMTEFSAAAAAAAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAA==`,
+  txrep: `
+tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.fee: 100
+tx.seqNum: 1375042369748993
+tx.timeBounds._present: false
+tx.memo.type: MEMO_NONE
+tx.operations.len: 1
+tx.operations[0].sourceAccount._present: true
+tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.type: PATH_PAYMENT_STRICT_SEND
+tx.operations[0].body.pathPaymentStrictSendOp.sendAsset: USD:GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.pathPaymentStrictSendOp.sendAmount: 1200000000
+tx.operations[0].body.pathPaymentStrictSendOp.destination: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.pathPaymentStrictSendOp.destAsset: XLM
+tx.operations[0].body.pathPaymentStrictSendOp.destMin: 1230000000
+tx.operations[0].body.pathPaymentStrictSendOp.path.len: 1
+tx.operations[0].body.pathPaymentStrictSendOp.path[0]: STELLAR:GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.ext.v: 0
+signatures.len: 0
+`
+};
+
+testCases.push(pathPaymentStrictSend);
+
+const pathPaymentStrictSendNoPath = {
+  description: 'pathPaymentStrictSend (no path)',
+  xdr: `AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAA0AAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAABHhowAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAAAAAABJUE+AAAAAAAAAAAAAAAAA`,
+  txrep: `
+tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.fee: 100
+tx.seqNum: 1375042369748993
+tx.timeBounds._present: false
+tx.memo.type: MEMO_NONE
+tx.operations.len: 1
+tx.operations[0].sourceAccount._present: true
+tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.type: PATH_PAYMENT_STRICT_SEND
+tx.operations[0].body.pathPaymentStrictSendOp.sendAsset: USD:GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.pathPaymentStrictSendOp.sendAmount: 1200000000
+tx.operations[0].body.pathPaymentStrictSendOp.destination: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.pathPaymentStrictSendOp.destAsset: XLM
+tx.operations[0].body.pathPaymentStrictSendOp.destMin: 1230000000
+tx.operations[0].body.pathPaymentStrictSendOp.path.len: 0
+tx.ext.v: 0
+signatures.len: 0
+`
+};
+
+testCases.push(pathPaymentStrictSendNoPath);

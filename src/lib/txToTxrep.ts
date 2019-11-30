@@ -116,6 +116,9 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
     case 'pathPaymentStrictReceive':
       addPathPaymentStrictReceiveOp(operation, addBodyLine);
       return;
+    case 'pathPaymentStrictSend':
+      addPathPaymentStrictSendOp(operation, addBodyLine);
+      return;
     case 'manageSellOffer':
       addManageSellOfferOp(operation, addBodyLine);
       return;
@@ -184,6 +187,20 @@ function addPathPaymentStrictReceiveOp(
   });
 }
 
+function addPathPaymentStrictSendOp(
+  operation: Operation.PathPaymentStrictSend,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('sendAsset', toAsset(operation.sendAsset));
+  addBodyLine('sendAmount', toAmount(operation.sendAmount));
+  addBodyLine('destination', operation.destination);
+  addBodyLine('destAsset', toAsset(operation.destAsset));
+  addBodyLine('destMin', toAmount(operation.destMin));
+  addBodyLine('path.len', operation.path.length);
+  operation.path.forEach((asset, i) => {
+    addBodyLine(`path[${i}]`, toAsset(asset));
+  });
+}
 function addManageSellOfferOp(
   operation: Operation.ManageSellOffer,
   addBodyLine: LineAdder

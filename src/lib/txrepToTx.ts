@@ -210,6 +210,11 @@ function toOperation({ sourceAccount, body }) {
         body.pathPaymentStrictReceiveOp,
         sourceAccount
       );
+    case 'PATH_PAYMENT_STRICT_SEND':
+      return toPathPaymentStrictSend(
+        body.pathPaymentStrictSendOp,
+        sourceAccount
+      );
     case 'MANAGE_SELL_OFFER':
       return toManageSellOffer(body.manageSellOfferOp, sourceAccount);
     case 'CREATE_PASSIVE_SELL_OFFER':
@@ -237,12 +242,9 @@ function toOperation({ sourceAccount, body }) {
 
     case 'MANAGE_BUY_OFFER':
       return toManageBuyOffer(body.manageBuyOfferOp, sourceAccount);
+
     default:
       throw new Error('Not implemented');
-
-    // case "MANAGE_BUY_OFFER":
-    //     ManageBuyOfferResult manageBuyOfferResult;
-    // case "PATH_PAYMENT_STRICT_SEND":
   }
 }
 
@@ -275,6 +277,20 @@ function toPathPaymentStrictReceive(op: any, source: string) {
     destination,
     destAsset: toAsset(destAsset),
     destAmount: toAmount(destAmount),
+    path: path && path.map(toAsset),
+    source
+  });
+}
+
+function toPathPaymentStrictSend(op: any, source: string) {
+  const { sendAsset, sendAmount, destAsset, destination, destMin, path } = op;
+
+  return Operation.pathPaymentStrictSend({
+    sendAsset: toAsset(sendAsset),
+    sendAmount: toAmount(sendAmount),
+    destination,
+    destAsset: toAsset(destAsset),
+    destMin: toAmount(destMin),
     path: path && path.map(toAsset),
     source
   });
