@@ -226,11 +226,11 @@ function toOperation({ sourceAccount, body }) {
     case 'ALLOW_TRUST':
       return toAllowTrust(body.allowTrustOp, sourceAccount);
 
+    case 'ACCOUNT_MERGE':
+      return toAccountMerge(body.accountMergeOp, sourceAccount);
     default:
       throw new Error('Not implemented');
 
-    // case "ALLOW_TRUST":
-    //     AllowTrustResult allowTrustResult;
     // case "ACCOUNT_MERGE":
     //     AccountMergeResult accountMergeResult;
     // case "INFLATION":
@@ -396,6 +396,18 @@ function toAllowTrust(op: AllowTrustOp, source: string) {
     trustor,
     authorize,
     assetCode: asset,
+    source
+  });
+}
+
+type AccountMergeOp = {
+  destination: string;
+};
+
+function toAccountMerge(op: AccountMergeOp, source: string) {
+  const { destination } = op;
+  return Operation.accountMerge({
+    destination,
     source
   });
 }

@@ -131,6 +131,9 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
     case 'allowTrust':
       addAllowTrustOp(operation, addBodyLine);
       return;
+    case 'accountMerge':
+      addAccountMergeOp(operation, addBodyLine);
+      return;
     default:
       throw Error(`${operation.type} is not implemented`);
   }
@@ -253,6 +256,13 @@ function addAllowTrustOp(
   addBodyLine('trustor', operation.trustor);
   addBodyLine('asset', operation.assetCode);
   addBodyLine('authorize', operation.authorize);
+}
+
+function addAccountMergeOp(
+  operation: Operation.AccountMerge,
+  addBodyLine: LineAdder
+) {
+  addBodyLine('destination', operation.destination);
 }
 
 function toAsset(asset: Asset) {
