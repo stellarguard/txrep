@@ -33,7 +33,8 @@
     "version": "standard-version",
     "reset": "git clean -dfx && git reset --hard && yarn install",
     "clean": "trash build test",
-    "prepare-release": "run-s reset test cov:check doc:html version doc:publish"
+    "all": "run-s reset test cov:check doc:html doc:demo",
+    "prepare-release": "run-s all version doc:publish"
   },
   "scripts-info": {
     "info": "Display information about the package scripts",
