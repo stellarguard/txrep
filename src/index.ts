@@ -1,1 +1,2 @@
-export * from './lib/txrepToTx';
+export { toTxrep } from './lib/txToTxrep';
+export { toTransaction } from './lib/txrepToTx';

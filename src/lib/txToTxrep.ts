@@ -135,7 +135,7 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
       addAllowTrustOp(operation, addBodyLine);
       return;
     case 'accountMerge':
-      addAccountMergeOp(operation, addBodyLine);
+      addAccountMergeOp(operation, addOpLine);
       return;
     case 'manageData':
       addManageDataOp(operation, addBodyLine);
@@ -286,9 +286,10 @@ function addAllowTrustOp(
 
 function addAccountMergeOp(
   operation: Operation.AccountMerge,
-  addBodyLine: LineAdder
+  addOpLine: LineAdder
 ) {
-  addBodyLine('destination', operation.destination);
+  // account merge does not include 'accountMergeOp' prefix
+  addOpLine('body.destination', operation.destination);
 }
 
 function addManageDataOp(

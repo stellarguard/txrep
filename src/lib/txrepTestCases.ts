@@ -316,7 +316,7 @@ tx.operations.len: 1
 tx.operations[0].sourceAccount._present: true
 tx.operations[0].sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
 tx.operations[0].body.type: ACCOUNT_MERGE
-tx.operations[0].body.accountMergeOp.destination: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+tx.operations[0].body.destination: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
 tx.ext.v: 0
 signatures.len: 0
 `

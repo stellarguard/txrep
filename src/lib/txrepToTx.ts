@@ -177,7 +177,8 @@ function toOperation({ sourceAccount, body }) {
     case 'ALLOW_TRUST':
       return toAllowTrust(body.allowTrustOp, sourceAccount);
     case 'ACCOUNT_MERGE':
-      return toAccountMerge(body.accountMergeOp, sourceAccount);
+      // ACCOUNT_MERGE does not have a nested op in it
+      return toAccountMerge(body, sourceAccount);
     case 'MANAGE_DATA':
       return toManageData(body.manageDataOp, sourceAccount);
     case 'BUMP_SEQUENCE':
