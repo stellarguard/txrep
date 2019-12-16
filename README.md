@@ -59,3 +59,9 @@ signatures[0].signature: defb4f1fad1c279327b55af184fdcddf73f4f7a8cb40e7e534a71d7
 
 const tx = toTransaction(txrep, Networks.TESTNET);
 ```
+
+## Contributing
+
+Want to contribute? Consider adding additional test cases to [tests.yaml](./tests.yaml).
+
+You can install the reference implementation at https://github.com/xdrpp/stc and then convert XDRs using: `stc example.xdr`
