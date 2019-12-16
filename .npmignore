@@ -14,3 +14,8 @@ coverage
 .nyc_output
 *.log
 txrepTestCases.ts
+tests.yaml
+demo/*
+.editorconfig
+CHANGELOG.md
+README.md
