@@ -1,10 +1,14 @@
 // tslint:disable:no-expression-statement
 import test from 'ava';
 import { Networks } from 'stellar-sdk';
-import { testCases } from './txrepTestCases';
 import { parseLine, toTransaction } from './txrepToTx';
 
-testCases.forEach(testCase => {
+import { readFileSync } from 'fs';
+import yaml from 'js-yaml';
+
+const tests = yaml.safeLoad(readFileSync('tests.yaml', 'utf8'));
+
+tests.tests.forEach(testCase => {
   test(testCase.description, t => {
     const tx = toTransaction(testCase.txrep, Networks.TESTNET);
     const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
