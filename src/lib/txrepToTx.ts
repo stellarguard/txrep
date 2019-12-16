@@ -313,7 +313,7 @@ type SetOptionsOp = {
   };
 };
 
-function toSetOptions(op: SetOptionsOp, source: string) {
+function toSetOptions(op: SetOptionsOp = {}, source: string) {
   const {
     inflationDest,
     clearFlags,

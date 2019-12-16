@@ -245,24 +245,25 @@ function addPrice(price: string, addBodyLine: LineAdder) {
 
 function addSigner(signer: Signer, addBodyLine: LineAdder) {
   addBodyLine('signer._present', !!signer);
-  if ((signer as Signer.Ed25519PublicKey).ed25519PublicKey) {
-    addBodyLine(
-      'signer.key',
-      (signer as Signer.Ed25519PublicKey).ed25519PublicKey
-    );
-  } else if ((signer as Signer.PreAuthTx).preAuthTx) {
-    addBodyLine(
-      'signer.key',
-      StrKey.encodePreAuthTx((signer as Signer.PreAuthTx).preAuthTx)
-    );
-  } else if ((signer as Signer.Sha256Hash).sha256Hash) {
-    addBodyLine(
-      'signer.key',
-      StrKey.encodeSha256Hash((signer as Signer.Sha256Hash).sha256Hash)
-    );
+  if (signer) {
+    if ((signer as Signer.Ed25519PublicKey).ed25519PublicKey) {
+      addBodyLine(
+        'signer.key',
+        (signer as Signer.Ed25519PublicKey).ed25519PublicKey
+      );
+    } else if ((signer as Signer.PreAuthTx).preAuthTx) {
+      addBodyLine(
+        'signer.key',
+        StrKey.encodePreAuthTx((signer as Signer.PreAuthTx).preAuthTx)
+      );
+    } else if ((signer as Signer.Sha256Hash).sha256Hash) {
+      addBodyLine(
+        'signer.key',
+        StrKey.encodeSha256Hash((signer as Signer.Sha256Hash).sha256Hash)
+      );
+    }
+    addBodyLine('signer.weight', signer.weight);
   }
-
-  addBodyLine('signer.weight', signer.weight);
 }
 
 function addChangeTrustOp(

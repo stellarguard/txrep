@@ -173,6 +173,52 @@ tests:
     tx.operations[0].body.setOptionsOp.signer.weight: 0
     tx.ext.v: 0
     signatures.len: 0
+- description: setOptions sha256
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAACzg4AzNURYfZEZLzKVrLSnvxZWgDIzGKmPn3Rm3BxpCQAAAABAAAAAAAAAAA=
+  txrep: |
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: false
+    tx.memo.type: MEMO_NONE
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: false
+    tx.operations[0].body.type: SET_OPTIONS
+    tx.operations[0].body.setOptionsOp.inflationDest._present: false
+    tx.operations[0].body.setOptionsOp.clearFlags._present: false
+    tx.operations[0].body.setOptionsOp.setFlags._present: false
+    tx.operations[0].body.setOptionsOp.masterWeight._present: false
+    tx.operations[0].body.setOptionsOp.lowThreshold._present: false
+    tx.operations[0].body.setOptionsOp.medThreshold._present: false
+    tx.operations[0].body.setOptionsOp.highThreshold._present: false
+    tx.operations[0].body.setOptionsOp.homeDomain._present: false
+    tx.operations[0].body.setOptionsOp.signer._present: true
+    tx.operations[0].body.setOptionsOp.signer.key: XDHA4AGM2UIWD5SEMS6MUVVS2KPPYWK2ADEMYYVGHZ65DG3QOGSCJB6B
+    tx.operations[0].body.setOptionsOp.signer.weight: 1
+    tx.ext.v: 0
+    signatures.len: 0
+- description: setOptions with nothing filled out
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  txrep: |
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: false
+    tx.memo.type: MEMO_NONE
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: false
+    tx.operations[0].body.type: SET_OPTIONS
+    tx.operations[0].body.setOptionsOp.inflationDest._present: false
+    tx.operations[0].body.setOptionsOp.clearFlags._present: false
+    tx.operations[0].body.setOptionsOp.setFlags._present: false
+    tx.operations[0].body.setOptionsOp.masterWeight._present: false
+    tx.operations[0].body.setOptionsOp.lowThreshold._present: false
+    tx.operations[0].body.setOptionsOp.medThreshold._present: false
+    tx.operations[0].body.setOptionsOp.highThreshold._present: false
+    tx.operations[0].body.setOptionsOp.homeDomain._present: false
+    tx.operations[0].body.setOptionsOp.signer._present: false
+    tx.ext.v: 0
+    signatures.len: 0
 - description: changeTrust
   xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAYAAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAABdIdugAAAAAAAAAAAA=
   txrep: |
