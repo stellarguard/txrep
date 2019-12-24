@@ -1,4 +1,3 @@
-import toSnakeCase from 'lodash.snakecase';
 import {
   Asset,
   Memo,
@@ -9,7 +8,7 @@ import {
   xdr
 } from 'stellar-sdk';
 
-import { best_r } from './utils';
+import { best_r, upperSnakeCase } from './utils';
 
 type LineAdder = (k: string, v: any, optional?: boolean) => void;
 
@@ -149,10 +148,6 @@ function addOperation(operation: Operation, i: number, lines: string[]) {
     default:
       throw Error(`${operation.type} is not implemented`);
   }
-}
-
-function upperSnakeCase(s: string): string {
-  return (toSnakeCase(s) as string).toUpperCase();
 }
 
 function addCreateAccountOperation(

@@ -49,3 +49,37 @@ export function best_r(rawNumber) {
 
   return [n.toNumber(), d.toNumber()];
 }
+
+// copied from https://stackoverflow.com/a/54733755/603657
+export function set(obj: object, path: string | [] | any, value: any) {
+  if (Object(obj) !== obj) return obj; // When obj is not an object
+  // If not yet an array, get the keys from the string-path
+  if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
+  path.slice(0, -1).reduce(
+    (
+      a,
+      c,
+      i // Iterate all of them except the last one
+    ) =>
+      Object(a[c]) === a[c] // Does the key exist and is its value an object?
+        ? // Yes: then follow that path
+          a[c]
+        : // No: create the key. Is the next key a potential array-index?
+          (a[c] =
+            Math.abs(path[i + 1]) >> 0 === +path[i + 1]
+              ? [] // Yes: assign a new array object
+              : {}), // No: assign a new plain object
+    obj
+  )[path[path.length - 1]] = value; // Finally assign the value to the last key
+  return obj; // Return the top-level object to allow chaining
+}
+
+export function upperSnakeCase(str: string) {
+  if (!str) return '';
+
+  return String(str)
+    .replace(/^[^A-Za-z0-9]*|[^A-Za-z0-9]*$/g, '')
+    .replace(/([a-z])([A-Z])/g, (_m, a, b) => a + '_' + b.toLowerCase())
+    .replace(/[^A-Za-z0-9]+|_+/g, '_')
+    .toUpperCase();
+}

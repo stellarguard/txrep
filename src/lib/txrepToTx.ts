@@ -13,7 +13,7 @@ import {
 } from 'stellar-sdk';
 
 import BigNumber from 'bignumber.js';
-import ldSet from 'lodash.set';
+import { set } from './utils';
 
 export function toTransaction(
   txrep: string,
@@ -60,7 +60,7 @@ export function toObj(txrep: string): object {
   fields.forEach(({ path, value }) => {
     // meta-attributes will mess up arrays if converted directly to an object, so ignore them
     if (!path || !isMetaAttribute(path)) {
-      ldSet(obj, path, value);
+      set(obj, path, value);
     }
   });
 
