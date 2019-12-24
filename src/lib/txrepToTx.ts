@@ -101,11 +101,18 @@ function getStringValue(line: string) {
   for (; i < line.length; ++i) {
     const char = line[i];
     if (inEscapeSequence) {
-      value += char;
+      // newline
+      if (char === 'n') {
+        value += '\n';
+      } else {
+        value += char;
+      }
+
       inEscapeSequence = false;
     } else if (char === '\\') {
       inEscapeSequence = true;
     } else if (char === '"') {
+      // end of string
       value += char;
       break;
     } else {

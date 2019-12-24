@@ -360,3 +360,22 @@ tests:
     tx.operations[0].body.pathPaymentStrictSendOp.path.len: 0
     tx.ext.v: 0
     signatures.len: 0
+- description: MEMO_TEXT with special characters
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAF4BiEEAAAABAAAAEFwgCiAgICAgICJ0w6tzdCIAAAABAAAAAAAAAAEAAAAANC7EryeMJTMbpLrwB9TK1INJ6KKkuIfQ/rYWacCLB0wAAAAAAAAAAAX14QAAAAAAAAAAAA==
+  txrep: |
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 1577158721
+    tx.memo.type: MEMO_TEXT
+    tx.memo.text: "\\ \n      \"tëst\""
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: false
+    tx.operations[0].body.type: PAYMENT
+    tx.operations[0].body.paymentOp.destination: GA2C5RFPE6GCKMY3US5PAB6UZLKIGSPIUKSLRB6Q723BM2OARMDUYEJ5
+    tx.operations[0].body.paymentOp.asset: XLM
+    tx.operations[0].body.paymentOp.amount: 100000000
+    tx.ext.v: 0
+    signatures.len: 0
