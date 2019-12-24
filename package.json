@@ -1,6 +1,6 @@
 {
   "name": "@stellarguard/txrep",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Convert from to and from txrep (SEP0011) and XDR",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
