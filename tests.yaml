@@ -1,4 +1,3 @@
-tests:
 - description: createAccount
   xdr: "AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAEBfNu3YzyLvv4ByuYW2pMAVUcNN04wTesjUDUAs0fe0AAAAAAda70AAAAAAAAAAAA=="
   txrep: |
@@ -17,7 +16,7 @@ tests:
     tx.operations[0].body.createAccountOp.startingBalance: 123400000
     tx.ext.v: 0
     signatures.len: 0
-- description: payment
+- description: payment (with signatures and timebounds)
   xdr: "AAAAACsWS5BDhC5BjpKQtznHFJ3CkU6+XtWopW+t+Q9KoH7QAAAAZAClKY0AAAABAAAAAQAAAABbicmAAAAAAF1q/QAAAAABAAAAFkVuam95IHRoaXMgdHJhbnNhY3Rpb24AAAAAAAEAAAAAAAAAAQAAAABAXzbt2M8i77+AcrmFtqTAFVHDTdOME3rI1A1ALNH3tAAAAAFVU0QAAAAAADJSVDIhkp9uz61Ra68rs3ScZIIgjT8ajX8Kkdc1be0LAAAAABfXk6AAAAAAAAAAAUqgftAAAABA3vtPH60cJ5MntVrxhP3N33P096jLQOflNKcdc6BRJLo2nbem0xtHyv0RhZIkaoV15sJJq5TsN2je22KSIhzlDA=="
   txrep: |
     tx.sourceAccount: GAVRMS4QIOCC4QMOSKILOOOHCSO4FEKOXZPNLKFFN6W7SD2KUB7NBPLN
@@ -377,5 +376,80 @@ tests:
     tx.operations[0].body.paymentOp.destination: GA2C5RFPE6GCKMY3US5PAB6UZLKIGSPIUKSLRB6Q723BM2OARMDUYEJ5
     tx.operations[0].body.paymentOp.asset: XLM
     tx.operations[0].body.paymentOp.amount: 100000000
+    tx.ext.v: 0
+    signatures.len: 0
+- description: MEMO_ID
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACq1SpjOsfCtIAAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  txrep: |
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
+    tx.memo.type: MEMO_ID
+    tx.memo.id: 12345678901234567890
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: false
+    tx.operations[0].body.type: SET_OPTIONS
+    tx.operations[0].body.setOptionsOp.inflationDest._present: false
+    tx.operations[0].body.setOptionsOp.clearFlags._present: false
+    tx.operations[0].body.setOptionsOp.setFlags._present: false
+    tx.operations[0].body.setOptionsOp.masterWeight._present: false
+    tx.operations[0].body.setOptionsOp.lowThreshold._present: false
+    tx.operations[0].body.setOptionsOp.medThreshold._present: false
+    tx.operations[0].body.setOptionsOp.highThreshold._present: false
+    tx.operations[0].body.setOptionsOp.homeDomain._present: false
+    tx.operations[0].body.setOptionsOp.signer._present: false
+    tx.ext.v: 0
+    signatures.len: 0
+- description: MEMO_HASH
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAADyKpd1HQBMgesV+9aYF8iQFE5DrGfiGEoCEWhw7ShLK4AAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  txrep: |
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
+    tx.memo.type: MEMO_HASH
+    tx.memo.hash: c8aa5dd474013207ac57ef5a605f224051390eb19f8861280845a1c3b4a12cae
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: false
+    tx.operations[0].body.type: SET_OPTIONS
+    tx.operations[0].body.setOptionsOp.inflationDest._present: false
+    tx.operations[0].body.setOptionsOp.clearFlags._present: false
+    tx.operations[0].body.setOptionsOp.setFlags._present: false
+    tx.operations[0].body.setOptionsOp.masterWeight._present: false
+    tx.operations[0].body.setOptionsOp.lowThreshold._present: false
+    tx.operations[0].body.setOptionsOp.medThreshold._present: false
+    tx.operations[0].body.setOptionsOp.highThreshold._present: false
+    tx.operations[0].body.setOptionsOp.homeDomain._present: false
+    tx.operations[0].body.setOptionsOp.signer._present: false
+    tx.ext.v: 0
+    signatures.len: 0
+- description: MEMO_RETURN
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAEyKpd1HQBMgesV+9aYF8iQFE5DrGfiGEoCEWhw7ShLK4AAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  txrep: |
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
+    tx.memo.type: MEMO_RETURN
+    tx.memo.retHash: c8aa5dd474013207ac57ef5a605f224051390eb19f8861280845a1c3b4a12cae
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: false
+    tx.operations[0].body.type: SET_OPTIONS
+    tx.operations[0].body.setOptionsOp.inflationDest._present: false
+    tx.operations[0].body.setOptionsOp.clearFlags._present: false
+    tx.operations[0].body.setOptionsOp.setFlags._present: false
+    tx.operations[0].body.setOptionsOp.masterWeight._present: false
+    tx.operations[0].body.setOptionsOp.lowThreshold._present: false
+    tx.operations[0].body.setOptionsOp.medThreshold._present: false
+    tx.operations[0].body.setOptionsOp.highThreshold._present: false
+    tx.operations[0].body.setOptionsOp.homeDomain._present: false
+    tx.operations[0].body.setOptionsOp.signer._present: false
     tx.ext.v: 0
     signatures.len: 0

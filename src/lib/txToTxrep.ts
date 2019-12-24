@@ -66,11 +66,11 @@ function addMemo(memo: Memo, lines: string[]) {
       return;
     case 'hash':
       addLine('tx.memo.type', 'MEMO_HASH', lines);
-      addLine('tx.memo.hash', memo.value, lines);
+      addLine('tx.memo.hash', toOpaque(memo.value), lines);
       return;
     case 'return':
       addLine('tx.memo.type', 'MEMO_RETURN', lines);
-      addLine('tx.memo.retHash', memo.value, lines);
+      addLine('tx.memo.retHash', toOpaque(memo.value), lines);
       return;
   }
 }

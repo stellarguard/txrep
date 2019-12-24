@@ -8,7 +8,7 @@ import yaml from 'js-yaml';
 
 const tests = yaml.safeLoad(readFileSync('tests.yaml', 'utf8'));
 
-tests.tests.forEach(testCase => {
+tests.forEach(testCase => {
   test(testCase.description, t => {
     const transaction = new Transaction(testCase.xdr, Networks.TESTNET);
     const actual = toTxrep(transaction);
