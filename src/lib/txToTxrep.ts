@@ -268,7 +268,7 @@ function addChangeTrustOp(
 ) {
   addBodyLine('line', toAsset(operation.line));
   if (operation.limit) {
-    addBodyLine('limit', toLimit(operation.limit));
+    addBodyLine('limit', toAmount(operation.limit));
   }
 }
 
@@ -344,11 +344,7 @@ function toAsset(asset: Asset) {
 }
 
 function toAmount(amount: string) {
-  return Number(amount) * 10000000;
-}
-
-function toLimit(limit: string) {
-  return new BigNumber(limit).times(10000000)
+  return new BigNumber(amount).times(10000000);
 }
 
 function toString(value: string) {

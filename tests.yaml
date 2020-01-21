@@ -37,6 +37,22 @@
     signatures.len: 1
     signatures[0].hint: 4aa07ed0
     signatures[0].signature: defb4f1fad1c279327b55af184fdcddf73f4f7a8cb40e7e534a71d73a05124ba369db7a6d31b47cafd118592246a8575e6c249ab94ec3768dedb6292221ce50c
+- description: payment (with MAX_INT amount)
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAf/////////8AAAAAAAAAAA==
+  txrep: |
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: false
+    tx.memo.type: MEMO_NONE
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: false
+    tx.operations[0].body.type: PAYMENT
+    tx.operations[0].body.paymentOp.destination: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.operations[0].body.paymentOp.asset: XLM
+    tx.operations[0].body.paymentOp.amount: 9223372036854775807
+    tx.ext.v: 0
+    signatures.len: 0
 - description: pathPaymentStrictReceive (no path)
   xdr: "AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAIAAAACU1RFTExBUgAAAAAAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAADuaygAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAWWgvAAAAAAAAAAAAAAAAAA="
   txrep: |
@@ -232,6 +248,21 @@
     tx.operations[0].body.type: CHANGE_TRUST
     tx.operations[0].body.changeTrustOp.line: USD:GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.operations[0].body.changeTrustOp.limit: 100000000000
+    tx.ext.v: 0
+    signatures.len: 0
+- description: changeTrust with MAX_INT limit
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAYAAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/H//////////AAAAAAAAAAA=
+  txrep: |
+    tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.fee: 100
+    tx.seqNum: 1375042369748993
+    tx.timeBounds._present: false
+    tx.memo.type: MEMO_NONE
+    tx.operations.len: 1
+    tx.operations[0].sourceAccount._present: false
+    tx.operations[0].body.type: CHANGE_TRUST
+    tx.operations[0].body.changeTrustOp.line: USD:GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
+    tx.operations[0].body.changeTrustOp.limit: 9223372036854775807
     tx.ext.v: 0
     signatures.len: 0
 - description: allowTrust
