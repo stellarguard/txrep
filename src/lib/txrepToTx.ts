@@ -380,7 +380,7 @@ function toChangeTrust(op: ChangeTrustOp, source: string) {
   const { line, limit } = op;
   return Operation.changeTrust({
     asset: toAsset(line),
-    limit: limit && toAmount(limit),
+    limit: limit && toLimit(limit),
     source
   });
 }
@@ -486,6 +486,10 @@ function toTimebounds(timeBounds) {
 
 function toAmount(amount: string) {
   return new BigNumber(amount).div(10000000).toFixed(10);
+}
+
+function toLimit(limit: string) {
+  return new BigNumber(limit).div(10000000).toFixed(7);
 }
 
 function toPrice({ n, d }: { n: string; d: string }) {

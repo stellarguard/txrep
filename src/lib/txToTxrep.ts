@@ -8,6 +8,7 @@ import {
   xdr
 } from 'stellar-sdk';
 
+import BigNumber from 'bignumber.js';
 import { best_r, upperSnakeCase } from './utils';
 
 type LineAdder = (k: string, v: any, optional?: boolean) => void;
@@ -267,7 +268,7 @@ function addChangeTrustOp(
 ) {
   addBodyLine('line', toAsset(operation.line));
   if (operation.limit) {
-    addBodyLine('limit', toAmount(operation.limit));
+    addBodyLine('limit', toLimit(operation.limit));
   }
 }
 
@@ -344,6 +345,10 @@ function toAsset(asset: Asset) {
 
 function toAmount(amount: string) {
   return Number(amount) * 10000000;
+}
+
+function toLimit(limit: string) {
+  return new BigNumber(limit).times(10000000)
 }
 
 function toString(value: string) {
