@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.6](https://github.com/stellarguard/txrep/compare/v1.0.5...v1.0.6) (2020-01-21)
+
+
+### Bug Fixes
+
+* 🐛 Fix precision issues with amounts and limits ([463faf5](https://github.com/stellarguard/txrep/commit/463faf5))
+
+
+
 ### [1.0.5](https://github.com/stellarguard/txrep/compare/v1.0.4...v1.0.5) (2019-12-24)
 
 
