@@ -9,9 +9,10 @@ import yaml from 'js-yaml';
 const tests = yaml.safeLoad(readFileSync('tests.yaml', 'utf8'));
 
 tests.forEach(testCase => {
-  test(testCase.description, t => {
+  const tc = testCase.skip ? test.skip : test;
+  tc(testCase.description, t => {
     const tx = toTransaction(testCase.txrep, Networks.TESTNET);
-    const actualXdr = (tx.toEnvelope().toXDR('base64') as unknown) as string;
+    const actualXdr = tx.toXDR() as string;
     t.is(actualXdr, testCase.xdr);
   });
 });

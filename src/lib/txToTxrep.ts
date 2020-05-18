@@ -1,5 +1,6 @@
 import {
   Asset,
+  FeeBumpTransaction,
   Memo,
   Operation,
   Signer,
@@ -13,16 +14,19 @@ import { best_r, upperSnakeCase } from './utils';
 
 type LineAdder = (k: string, v: any, optional?: boolean) => void;
 
-export function toTxrep(transaction: Transaction) {
+export function toTxrep(transaction: Transaction | FeeBumpTransaction) {
   const lines = [];
 
-  addLine('tx.sourceAccount', transaction.source, lines);
-  addLine('tx.fee', transaction.fee, lines);
-  addLine('tx.seqNum', transaction.sequence, lines);
-  addTimeBounds(transaction.timeBounds, lines);
-  addMemo(transaction.memo, lines);
-  addOperations(transaction.operations, lines);
-  addLine('tx.ext.v', 0, lines);
+  if (transaction instanceof Transaction) {
+    addLine('tx.sourceAccount', transaction.source, lines);
+    addLine('tx.fee', transaction.fee, lines);
+    addLine('tx.seqNum', transaction.sequence, lines);
+    addTimeBounds(transaction.timeBounds, lines);
+    addMemo(transaction.memo, lines);
+    addOperations(transaction.operations, lines);
+    addLine('tx.ext.v', 0, lines);
+  }
+
   addSignatures(transaction.signatures, lines);
 
   return lines.join('\n');
