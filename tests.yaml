@@ -38,12 +38,14 @@
     signatures[0].hint: 4aa07ed0
     signatures[0].signature: defb4f1fad1c279327b55af184fdcddf73f4f7a8cb40e7e534a71d73a05124ba369db7a6d31b47cafd118592246a8575e6c249ab94ec3768dedb6292221ce50c
 - description: payment (with MAX_INT amount)
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAf/////////8AAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAH//////////AAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: false
@@ -54,12 +56,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: pathPaymentStrictReceive (no path)
-  xdr: "AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAIAAAACU1RFTExBUgAAAAAAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAADuaygAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAWWgvAAAAAAAAAAAAAAAAAA="
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACAAAAAlNURUxMQVIAAAAAAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAA7msoAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAAAAAAFloLwAAAAAAAAAAAAAAAAA
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: false
@@ -73,12 +77,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: pathPaymentStrictReceive (with path)
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAIAAAACU1RFTExBUgAAAAAAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAADuaygAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAWWgvAAAAAACAAAAAAAAAAFVU0QAAAAAAEBfNu3YzyLvv4ByuYW2pMAVUcNN04wTesjUDUAs0fe0AAAAAAAAAAA=
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACAAAAAlNURUxMQVIAAAAAAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAA7msoAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAAAAAAFloLwAAAAAAgAAAAAAAAABVVNEAAAAAABAXzbt2M8i77+AcrmFtqTAFVHDTdOME3rI1A1ALNH3tAAAAAAAAAAA
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: false
@@ -94,12 +100,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: manageSellOffer
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAMAAAACU1RFTExBUgAAAAAAAAAAAEBfNu3YzyLvv4ByuYW2pMAVUcNN04wTesjUDUAs0fe0AAAAAVVTRAAAAAAAQF827djPIu+/gHK5hbakwBVRw03TjBN6yNQNQCzR97QAAAAAO5rKAAAAAAQAAAABAAAAAAAAAZ4AAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAADAAAAAlNURUxMQVIAAAAAAAAAAABAXzbt2M8i77+AcrmFtqTAFVHDTdOME3rI1A1ALNH3tAAAAAFVU0QAAAAAAEBfNu3YzyLvv4ByuYW2pMAVUcNN04wTesjUDUAs0fe0AAAAADuaygAAAAAEAAAAAQAAAAAAAAGeAAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -114,12 +122,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: createPassiveSellOffer
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAQAAAAAAAAAAAAAAABJUE+AAAAAAQAAAAoAAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAEAAAAAAAAAAAAAAAASVBPgAAAAAEAAAAKAAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -133,12 +143,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: setOptions
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAABAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAQAAAAMAAAABAAAABwAAAAEAAAABAAAAAQAAAAIAAAABAAAAAwAAAAEAAAAEAAAAAQAAAA9zdGVsbGFyZ3VhcmQubWUAAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAUAAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAFAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAEAAAADAAAAAQAAAAcAAAABAAAAAQAAAAEAAAACAAAAAQAAAAMAAAABAAAABAAAAAEAAAAPc3RlbGxhcmd1YXJkLm1lAAAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAFAAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: false
@@ -165,12 +177,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: setOptions preAuthTx
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABkQMmldKxavDs6MmhFzaCpLp7nYnszI84tNc8il9QypsAAAAAAAAAAAAAAAA=
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAZEDJpXSsWrw7OjJoRc2gqS6e52J7MyPOLTXPIpfUMqbAAAAAAAAAAAAAAAA
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: false
@@ -189,12 +203,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: setOptions sha256
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAACzg4AzNURYfZEZLzKVrLSnvxZWgDIzGKmPn3Rm3BxpCQAAAABAAAAAAAAAAA=
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAs4OAMzVEWH2RGS8ylay0p78WVoAyMxipj590ZtwcaQkAAAAAQAAAAAAAAAA
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: false
@@ -213,12 +229,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: setOptions with nothing filled out
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: false
@@ -235,12 +253,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: changeTrust
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAYAAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAABdIdugAAAAAAAAAAAA=
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAGAAAAAVVTRAAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAXSHboAAAAAAAAAAAA
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -251,12 +271,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: changeTrust with MAX_INT limit
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAAAAAAYAAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/H//////////AAAAAAAAAAA=
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAGAAAAAVVTRAAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfx//////////wAAAAAAAAAA
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: false
@@ -266,12 +288,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: allowTrust
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAcAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAABVVNEAAAAAAEAAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAHAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAVVTRAAAAAABAAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -279,16 +303,18 @@
     tx.operations[0].body.type: ALLOW_TRUST
     tx.operations[0].body.allowTrustOp.trustor: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.operations[0].body.allowTrustOp.asset: USD
-    tx.operations[0].body.allowTrustOp.authorize: true
+    tx.operations[0].body.allowTrustOp.authorize: 1
     tx.ext.v: 0
     signatures.len: 0
 - description: accountMerge
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAgAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAIAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -298,12 +324,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: manageData
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAoAAAAMc3RlbGxhcmd1YXJkAAAAAQAAAAwibmljZSBkYXRhISIAAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAKAAAADHN0ZWxsYXJndWFyZAAAAAEAAAAMIm5pY2UgZGF0YSEiAAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -315,12 +343,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: bumpSequence
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAsAAAAAAAAAZAAAAAAAAAAA
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAALAAAAAAAAAGQAAAAAAAAAAA==
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -330,12 +360,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: manageBuyOffer
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAwAAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAAAAAAA7msoAAAAAHsAAAABAAAAAAAAAcgAAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAMAAAAAVVTRAAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAO5rKAAAAAB7AAAAAQAAAAAAAAHIAAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -350,12 +382,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: pathPaymentStrictSend
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAA0AAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAABHhowAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAAAAAABJUE+AAAAAAQAAAAJTVEVMTEFSAAAAAAAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAAAAAAA==
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAANAAAAAVVTRAAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAR4aMAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAAAAAAASVBPgAAAAAEAAAACU1RFTExBUgAAAAAAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAAAAAAA=
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true
@@ -371,12 +405,14 @@
     tx.ext.v: 0
     signatures.len: 0
 - description: pathPaymentStrictSend (no path)
-  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAAAAAAAAAAABAAAAAQAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAA0AAAABVVNEAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAABHhowAAAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAAAAAAABJUE+AAAAAAAAAAAAAAAAA
+  xdr: AAAAAKjbIbAJn+ysBWgp/jsZEx4ccbB3oicFelkopFq7rB38AAAAZAAE4pgAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAANAAAAAVVTRAAAAAAAqNshsAmf7KwFaCn+OxkTHhxxsHeiJwV6WSikWrusHfwAAAAAR4aMAAAAAACo2yGwCZ/srAVoKf47GRMeHHGwd6InBXpZKKRau6wd/AAAAAAAAAAASVBPgAAAAAAAAAAAAAAAAA==
   txrep: |
     tx.sourceAccount: GCUNWINQBGP6ZLAFNAU74OYZCMPBY4NQO6RCOBL2LEUKIWV3VQO7YOBF
     tx.fee: 100
     tx.seqNum: 1375042369748993
-    tx.timeBounds._present: false
+    tx.timeBounds._present: true
+    tx.timeBounds.minTime: 0
+    tx.timeBounds.maxTime: 0
     tx.memo.type: MEMO_NONE
     tx.operations.len: 1
     tx.operations[0].sourceAccount._present: true

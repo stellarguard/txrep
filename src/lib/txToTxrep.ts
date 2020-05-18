@@ -38,7 +38,7 @@ function addTimeBounds(
   timeBounds: { minTime: string; maxTime: string },
   lines: string[]
 ) {
-  if (timeBounds) {
+  if (timeBounds != null) {
     addLine('tx.timeBounds._present', true, lines);
     addLine('tx.timeBounds.minTime', timeBounds.minTime, lines);
     addLine('tx.timeBounds.maxTime', timeBounds.maxTime, lines);

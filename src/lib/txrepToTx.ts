@@ -150,8 +150,8 @@ function parseValue(value: string) {
   return value;
 }
 
-function toFee(value: string): number {
-  return Number(value);
+function toFee(value: string): string {
+  return value;
 }
 
 function toOperation({ sourceAccount, body }) {
@@ -388,14 +388,14 @@ function toChangeTrust(op: ChangeTrustOp, source: string) {
 type AllowTrustOp = {
   trustor: string;
   asset: string;
-  authorize: boolean;
+  authorize: boolean | number | undefined;
 };
 
 function toAllowTrust(op: AllowTrustOp, source: string) {
   const { trustor, asset, authorize } = op;
   return Operation.allowTrust({
     trustor,
-    authorize,
+    authorize: toBoolInt(authorize),
     assetCode: asset,
     source
   });
@@ -493,4 +493,12 @@ function toPrice({ n, d }: { n: string; d: string }) {
     n: Number(n),
     d: Number(d)
   };
+}
+
+function toBoolInt(v: boolean | number): number {
+  if (v === null || v === undefined) {
+    return 0;
+  }
+
+  return Number(v);
 }
